@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/catppuccin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <style>
+        .fragment.blur {
+            filter: blur(100px);
+        }
+
+        .fragment.blur.visible {
+            filter: none;
+        }
+
+        .reveal pre code {
+            display: block; /* Ensure block-level layout */
+            overflow-y: auto; /* Add vertical scrollbar when needed */
+            /*max-height: 700px; !* Set maximum height for the code block *!*/
+            word-wrap: normal; /* Prevent text wrapping to keep lines intact */
+            white-space: pre; /* Preserve spaces and line breaks in code */
+        }
+
+        .reveal .highlight-blue-initially {
+            color: blue;
+        }
+
+        /*.reveal .no-bullets {*/
+        /*  list-style-type: none;*/
+        /*}*/
+
+
+        .reveal ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .reveal ul li {
+            padding-left: 1.5em;
+            position: relative;
+        }
+
+        /* Solid checkmark icon */
+        .reveal ul li.check::before {
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            content: "\f00c";
+            position: absolute;
+            left: 0;
+            top: 0;
+            /*color: lightblue;*/
+        }
+
+        /* Star icon */
+        .reveal ul li.star::before {
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            content: "\f005";
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .slides {
+            overflow-y: auto;
+        }
+
+        /* Center code blocks and add some shadow */
+        .reveal .slides section .code-wrapper {
+            width: 90%;
+            margin: 20px auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            border-radius: 8px; /* Added rounded corners */
+            overflow: hidden; /* Ensure code doesn't overflow rounded corners */
+        }
+
+        /* Ensure code blocks are readable */
+        .reveal .slides section pre code {
+            max-height: 550px; /* Adjust as needed */
+            font-size: 0.75em; /* Slightly smaller font size for more code */
+            line-height: 1.3; /* Improve line spacing */
+            border-radius: 0; /* Remove default radius from highlight.js */
+        }
+
+        /* Standardize text alignment and margins */
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            text-align: center;
+            margin-bottom: 40px; /* More space below headings */
+        }
+
+        .reveal p, .reveal li {
+            text-align: left;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+
+        .reveal ul, .reveal ol {
+            margin-left: 5%;
+            margin-right: 5%;
+            width: 90%;
+            display: block; /* Ensure lists take block space */
+        }
+
+        .reveal pre {
+            margin: 0 auto; /* Center pre block */
+            width: 100%; /* Make pre take full width of wrapper */
+            box-shadow: none; /* Remove default shadow from pre */
+        }
+
+        /* Style for analogy boxes */
+        .analogy {
+            font-style: italic;
+            background-color: #f0f8ff; /* Light AliceBlue background */
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 5%; /* Add more vertical margin */
+            border-left: 5px solid #87ceeb; /* Sky blue border */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        .analogy p {
+            margin-left: 0; /* Reset margin for paragraphs inside analogy box */
+            margin-right: 0;
+        }
+
+        /* Ensure table looks decent */
+        .reveal table {
+            margin: 30px auto;
+            border-collapse: collapse;
+            width: 90%;
+        }
+
+        .reveal th, .reveal td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .reveal th {
+            background-color: #e0f2f7; /* Light cyan header */
+        }
+
+        .reveal small {
+            display: block; /* Make small text block level */
+            margin-top: 15px;
+            text-align: center;
+            font-style: italic;
+        }
+
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h3>Functors and Monads for Java Developers</h3>
+            <h3>Demystifying Functional Concepts</h3>
+            <p style="text-align: center;"><small>Magnus Smith</small></p>
+            <aside class="notes">
+                Welcome everyone. Today we'll dive into Functors and Monads, concepts from functional programming that
+                are increasingly relevant in Java. Don't worry if they sound intimidating; we'll focus on intuition and
+                practical examples.
+            </aside>
+        </section>
+        <section>
+            <h3>Why Are We Here?</h3>
+            <ul>
+                <li class="fragment custom blur highlight-current-green" data-fragment-index="1">Functional programming
+                    concepts are increasingly relevant in Java.
+                </li>
+                <li class="fragment custom blur highlight-current-green" data-fragment-index="2">Functors and Monads
+                    sound complex, but the underlying ideas are powerful and useful.
+                </li>
+            </ul>
+            <aside class="notes">
+                Why should you, as a Java developer, care about these? Because they help write cleaner, more robust
+                code, especially when dealing with common problems like nulls, collections, or asynchronous operations.
+                We'll see how Java already uses these patterns.
+            </aside>
+        </section>
+        <section>
+            <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">Goal:</h3>
+            <ul>
+                <li class="fragment custom blur highlight-current-green check" data-fragment-index="1"> Understand <em>what</em>
+                    they are, see <em>how</em> they appear in Java, and learn <em>why</em> you might care.
+                </li>
+                <li class="fragment custom blur highlight-current-green check" data-fragment-index="2">Focus on
+                    intuition and practical application, not deep category theory.
+                </li>
+            </ul>
+            <aside class="notes">
+                Why should you, as a Java developer, care about these? Because they help write cleaner, more robust
+                code, especially when dealing with common problems like nulls, collections, or asynchronous operations.
+                We'll see how Java already uses these patterns.
+            </aside>
+        </section>
+        <section>
+            <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">The Problem: Handling
+                "Context"</h3>
+            <p>Often, our values don't exist in isolation. They come with some form of "context":</p>
+            <ul>
+                <li class="fragment custom blur highlight-current-green check" data-fragment-index="1">Maybe the value
+                    is present, maybe it's not (like <code>Optional&lt;T&gt;</code>).
+                </li>
+                <li class="fragment custom blur highlight-current-green check" data-fragment-index="2">It's one value
+                    among many (like <code>List&lt;T&gt;</code> or <code>Stream&lt;T&gt;</code>).
+                </li>
+            </ul>
+            <aside class="notes">
+                Think about everyday Java code. You check for null, you iterate over lists, you handle futures. These
+                all involve values wrapped in some kind of context. Manually managing this context can lead to
+                boilerplate and errors.
+            </aside>
+        </section>
+        <section>
+            <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">The Problem: Handling
+                "Context"</h3>
+            <ul>
+                <li class="fragment custom blur highlight-current-green check" data-fragment-index=1">It's a value that
+                    will arrive later (like <code>CompletableFuture&lt;T&gt;</code>).
+                </li>
+                <li class="fragment custom blur highlight-current-green check" data-fragment-index="2">It represents a
+                    computation that might succeed or fail (Custom <code>Result&lt;T&gt;</code> or
+                    <code>Try&lt;T&gt;</code> types).
+                </li>
+            </ul>
+            <aside class="notes">
+                Think about everyday Java code. You check for null, you iterate over lists, you handle futures. These
+                all involve values wrapped in some kind of context. Manually managing this context can lead to
+                boilerplate and errors.
+            </aside>
+        </section>
+        <section>
+            <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">Challenge:</h3>
+            <p class="fragment custom blur highlight-current-green check" data-fragment-index=1">How do we apply
+                functions or transformations to the value(s) <em>inside</em> this context, without manually unpacking
+                and repacking them every time?</p>
+            <aside class="notes">
+                Think about everyday Java code. You check for null, you iterate over lists, you handle futures. These
+                all involve values wrapped in some kind of context. Manually managing this context can lead to
+                boilerplate and errors.
+            </aside>
+        </section>
+
+        <section>
+            <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">Enter the Functor!</h3>
+            <p><em>A design pattern for types that contain value(s).</em></p>
+            <ul>
+                <li class="fragment custom blur highlight-current-green" data-fragment-index="1">Container:<span
+                        class="fragment custom blur highlight-red"
+                        data-fragment-index="2"> The type that holds values</span>
+                </li>
+                <li class="fragment custom blur highlight-current-green" data-fragment-index="3">Function:<span
+                        class="fragment custom blur highlight-red"
+                        data-fragment-index="4"> A -> B</span>
+                </li>
+                <li class="fragment custom blur highlight-current-green" data-fragment-index="5">Functor:<span
+                        class="fragment custom blur highlight-red"
+                        data-fragment-index="6"> Transformation capability of the container</span>
+                </li>
+            </ul>
+            <p class="fragment custom blur highlight-current-green" data-fragment-index=7">Provides a standard way to
+                apply a function to the value(s) <em>without changing the context</em>.</p>
+
+            <aside class="notes">
+                In simple terms, a functor is a design pattern that allows you to apply a function to elements within a
+                container without having to extract those elements manually. Think of it as a “mappable” container.
+
+
+                In Java terms:
+
+                Container: This could be an Optional, a List, a Stream, or any other type that “holds” values.
+                Function: This is a transformation you want to apply to the values inside the container.
+                Functor: This is the capability of the container to apply the function, producing a new container with
+                the transformed values.
+
+                Essentially, a functor provides a map operation that “lifts” a function to work within the context of
+                the container.
+
+                The first pattern to help us is the Functor. Think of it as an interface (though not always a literal
+                Java interface) for containers that says "I know how to apply a function to my contents". The magic is
+                in the `map` method.
+            </aside>
+        </section>
+        <section>
+            <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">Enter the Functor!</h3>
+            <p><em>It lifts a function into the world of contexts.</em></p>
+
+            <p class="fragment custom blur highlight-current-green" data-fragment-index=1">The transformation operation:
+                <span
+                        class="fragment custom blur highlight-red"
+                        data-fragment-index="2"><code>map</code></span></p>
+            <p class="fragment custom blur highlight-current-green" data-fragment-index=3"><code>map</code> takes a
+                regular function <code>A -> B</code><span
+                        class="fragment custom blur highlight-red"
+                        data-fragment-index="4"> transforms <code>Functor&lt;A&gt;</code> to <code>Functor&lt;B&gt;</code>.</span>
+            </p>
+
+            <aside class="notes">
+                In simple terms, a functor is a design pattern that allows you to apply a function to elements within a
+                container without having to extract those elements manually. Think of it as a “mappable” container.
+                The first pattern to help us is the Functor. Think of it as an interface (though not always a literal
+                Java interface) for containers that says "I know how to apply a function to my contents". The magic is
+                in the `map` method.
+            </aside>
+        </section>
+
+        <section>
+            <h3>Functor Analogy: The Magic Box 🎁</h3>
+
+            <p>Imagine a sealed, transparent box (the Functor context, e.g., <code>Optional</code>) containing an item
+                (the value, e.g., a <code>String</code>).</p>
+            <p>You have a tool (a function, e.g., <code>String::length</code>) that can transform the item.</p>
+
+            <aside class="notes">
+                This analogy highlights key aspects: the context (box) is preserved, the function operates inside, and
+                you get a new context back. If the box was empty, the arms do nothing and return a new empty box.
+            </aside>
+        </section>
+        <section>
+            <h3>Functor Analogy: The Magic Box 🎁</h3>
+
+            <p>The <code>map</code> operation is like having robotic arms on the box. You give the arms your tool (the
+                function), and they reach *inside* the box, use the tool on the item, and place the *transformed* item
+                into a *new*, identical sealed box.</p>
+            <p>You never opened the original box, and you get back the same *type* of box, just potentially holding a
+                different *type* of item.</p>
+
+            <aside class="notes">
+                This analogy highlights key aspects: the context (box) is preserved, the function operates inside, and
+                you get a new context back. If the box was empty, the arms do nothing and return a new empty box.
+            </aside>
+        </section>
+        <section>
+            <h3>Functor: <code>Optional&lt;T&gt;</code></h3>
+            <p class="fragment custom blur highlight-current-green">Context: <span
+                    class="fragment custom blur highlight-current-red"><em>optionality</em></span></p>
+            <div class="code-wrapper">
+                <pre><code class="java" data-line-numbers data-noescape data-trim>
+// Optional containing a String (context + value)
+Optional&lt;String&gt; optName = Optional.of("Alice");
+
+// Function: String -> Integer (length)
+Function&lt;String, Integer&gt; getNameLength = String::length;
+
+// map applies the function *inside* the Optional context
+// Input: Optional&lt;String&gt;, Function&lt;String, Integer>
+// Output: Optional&lt;Integer&gt;
+Optional&lt;Integer> optLength = optName.map(getNameLength);
+
+System.out.println(optLength); // Output: Optional[5]
+
+// What if the Optional is empty?
+Optional&lt;String&gt; emptyOpt = Optional.empty();
+// Function is never called
+Optional&lt;Integer&gt; emptyLength = emptyOpt.map(getNameLength);
+// Output: Optional.empty (context preserved)
+System.out.println(emptyLength);
+				</code></pre>
+            </div>
+            <aside class="notes">
+                Here, `Optional` is the box. `map` applies `String::length` only if the box contains a String. The
+                result is still an `Optional` box, now potentially containing an Integer. Notice how the null check is
+                handled implicitly by `map`.
+            </aside>
+        </section>
+
+        <section>
+            <h3>Functor: <code>Stream&lt;T&gt;</code></h3>
+            <p class="fragment custom blur highlight-current-green">Context: <span
+                    class="fragment custom blur highlight-current-red"><em>a sequence of elements</em></span></p>
+            <div class="code-wrapper">
+                <pre><code class="java" data-noescape data-trim data-line-numbers>
+List&lt;String&gt; names = Arrays.asList("Bob", "Charlie", "David");
+Stream&lt;String&gt; nameStream = names.stream(); // Context: Stream&lt;String&gt;
+
+// Function: String -> String (uppercase)
+Function&lt;String, String&gt; toUpper = String::toUpperCase;
+
+// map applies the function to each element *within* the Stream context
+// Input: Stream&lt;String&gt;, Function&lt;String, String&gt;
+// Output: Stream&lt;String&gt;
+Stream&lt;String&gt; upperCaseStream = nameStream.map(toUpper);
+
+upperCaseStream.forEach(System.out::println);
+// BOB
+// CHARLIE
+// DAVID
+                </code></pre>
+            </div>
+            <aside class="notes">
+                For Streams, `map` applies the function to every element in the sequence.
+                The context (`Stream`) is maintained; we get a new `Stream` containing the transformed elements.
+                This is like the box analogy applied to multiple items in sequence.
+                map transforms each element while preserving the Stream structure.
+            </aside>
+        </section>
+
+        <section>
+            <h3>Functor Laws</h3>
+            <p>For a type to be a <em>well-behaved</em> Functor, its <code>map</code> should obey two laws:</p>
+            <p class="fragment custom blur highlight-green"><strong>1. Identity:</strong>
+                <span class="fragment custom blur highlight-current-red"><br><code>functor.map(x -> x)</code> should be equivalent to <code>functor</code>.</span>
+            </p>
+            <aside class="notes">
+                These laws might seem abstract, but they just guarantee that `map` doesn't do anything weird. It behaves
+                predictably, like normal function application. `Optional` and `Stream` follow these laws.
+                Mapping with the identity function (a function that returns its input unchanged) should result in an
+                equivalent functor. In pseudo-code: functor.map(x -> x) is equivalent to functor.
+                <p> Mapping with the identity function (<code>x -> x</code>) must not change the functor.</p>
+            </aside>
+        </section>
+        <section>
+            <h3>Functor Laws</h3>
+
+            <p class="fragment custom blur highlight-green"><strong>2. Composition:</strong>
+                <span class="fragment custom blur highlight-current-red"><br>Mapping with two functions sequentially is the same as mapping with the composition of those functions.</span>
+            </p>
+            <p class="fragment custom blur highlight-current-red"><code>functor.map(f).map(g)</code> is equivalent to
+                <code>functor.map(x -> g(f(x)))</code><br></p>
+
+            <aside class="notes">
+                These laws might seem abstract, but they just guarantee that `map` doesn't do anything weird. It behaves
+                predictably, like normal function application. `Optional` and `Stream` follow these laws.
+                Mapping with the identity function (<code>x -> x</code>) must not change the functor.
+                <small>(These ensure <code>map</code> works intuitively, just like applying functions normally, but
+                    within the context.)</small>
+
+            </aside>
+        </section>
+        <section>
+            <h3>The Problem with <code>map</code></h3>
+            <p>What happens if the function we want to <code>map</code> *also* returns a value wrapped in the same
+                context?</p>
+
+            <p>Uh oh! We get nested contexts: <code>Optional&lt;Optional&lt;String&gt;&gt;</code>. This quickly becomes
+                awkward to work with.</p>
+            <aside class="notes" data-noescape>
+                Here's where Functors fall short. If our transformation function itself returns a contextual value (like
+                another Optional), `map` just wraps it again, leading to nested structures like `Optional
+                <Optional
+                <T>>` or `Stream
+                    <Stream
+                    <T>>`. This is often not what we want.
+            </aside>
+        </section>
+        <section>
+            <h3>The Problem with <code>map</code></h3>
+            <div class="code-wrapper">
+                <pre><code class="java" data-line-numbers data-trim>
+// Represents a user, address might be null
+record User(String name, String address) {}
+
+// Function that looks up a user and returns their address *as an Optional*
+Optional&lt;String&gt; findAddress(User user) {
+    // In real life, this might involve DB lookup, etc.
+    return Optional.ofNullable(user.address());
+}
+
+Optional&lt;User&gt; optUser = Optional.of(new User("Alice", "123 Main St"));
+
+// Let's try using map with findAddress...
+// map expects Function&lt;User, String&gt;, but gets Function&lt;User, Optional&lt;String&gt;&gt;
+// map wraps the result automatically...
+Optional&lt;Optional&lt;String&gt;&gt; nestedAddress = optUser.map(this::findAddress);
+
+System.out.println(nestedAddress);
+// Output: Optional[Optional[123 Main St]]
+                </code></pre>
+            </div>
+
+            <aside class="notes">
+                Here's where Functors fall short. If our transformation function itself returns a contextual value (like
+                another Optional), `map` just wraps it again, leading to nested structures like `Optional&lt;Optional&lt;T&gt;&gt;`
+                or `Stream&lt;Stream&lt;T&gt;&gt;`. This is often not what we want.
+                <p>Uh oh! We get nested contexts: <code>Optional&lt;Optional&lt;String&gt;&gt;</code>. This quickly
+                    becomes awkward to work with.</p>
+            </aside>
+        </section>
+
+        <section>
+            <h3>Enter the Monad!</h3>
+            <p>A Monad is a Functor with <em>additional powers</em>.</p>
+            <p>It's designed specifically to handle sequences of operations where each step might return a value <em>already
+                wrapped</em> in the Monad's context.</p>
+            <aside class="notes">
+                Monads build on Functors. They add the crucial `flatMap` operation. `flatMap` is like `map`, but it's
+                specifically for functions that *already* return a monadic value. Its superpower is preventing the
+                nesting we just saw.
+            </aside>
+        </section>
+        <section>
+            <h3>Enter the Monad!</h3>
+
+            <p class="fragment custom blur highlight-green" data-fragment-index=1">The key operation:<span
+                    class="fragment custom blur highlight-red"
+                    data-fragment-index="2"><code>flatMap</code></span></p>
+            <p class="fragment custom blur highlight-current-green" data-fragment-index=3"><code>f: A -> Monad&lt;B&gt;</code>
+				<span class="fragment custom blur highlight-red" data-fragment-index="4"><br>flatMap transforms
+					<br><code>Monad&lt;A&gt;</code> to <code>Monad&lt;B&gt;</code>.</span></p>
+            <p  class="fragment custom blur" data-fragment-index="4" >Crucially, it <em>maps</em> then <strong>flattens</strong> the result, avoiding the nesting problem!</p>
+            <aside class="notes">
+                Monads build on Functors. They add the crucial `flatMap` operation. `flatMap` is like `map`, but it's
+                specifically for functions that *already* return a monadic value. Its superpower is preventing the
+                nesting we just saw.
+                <p>Key method: <code>flatMap</code> (or <code>bind</code>, <code>chain</code> in other languages)</p>
+                <p><code>flatMap</code> takes a function <code>A -> Monad&lt;B&gt;</code> and transforms a <code>Monad&lt;A&gt;</code>
+                    into a <code>Monad&lt;B&gt;</code>.</p>
+
+            </aside>
+        </section>
+        <section>
+            <h3>Enter the Monad!</h3>
+			<p class="fragment custom blur highlight-green" data-fragment-index=1">Lift a value into the context: <span
+					class="fragment custom blur highlight-red"
+					data-fragment-index="2"><code>of</code></span></p>
+            <p class="fragment custom blur"
+			   data-fragment-index="2">In Java, typically static factory methods like <code>Optional.of()</code>, <code>Stream.of()</code>.</p>
+            <aside class="notes">
+                Monads build on Functors. They add the crucial `flatMap` operation. `flatMap` is like `map`, but it's
+                specifically for functions that *already* return a monadic value. Its superpower is preventing the
+                nesting we just saw.
+				<p>Monads also need a way to wrap a plain value into the context.
+					In Java, typically static factory methods like <code>Optional.of()</code>, <code>Stream.of()</code>.</p>
+            </aside>
+        </section>
+        <section>
+            <h3>Monad Analogy: The Smart Box 🎁➡️🎁</h3>
+
+            <p>Now, the function you want to apply <em>itself</em> produces a <em>new</em> sealed box containing the result</p><br>
+				<code>f: User -> Optional&lt;Address&gt;</code>)
+            <p>If you just used <code>map</code> (the Functor way), you'd get a box containing another box (<code>Optional&lt;Optional&lt;Address&gt;&gt;</code>).
+            </p>
+            <aside class="notes">
+                The key difference in the analogy is that `flatMap` knows how to handle functions that return *another
+                box*. It performs the function and then intelligently merges the result back into a single layer of
+                context.
+            </aside>
+        </section>
+        <section>
+            <h3>Monad Analogy: The Smart Box 🎁➡️🎁</h3>
+            <p>The <code>flatMap</code> operation (the Monad way) is smarter:</p>
+            <ol>
+                <li>It applies the function inside the first box to get the <em>new inner box</em>.</li>
+                <li>It then <em>unpacks</em> this new inner box.</li>
+                <li>It takes the item (or lack thereof) from the inner box and puts it directly into a final box of the
+                    original type.
+                </li>
+            </ol>
+
+            <p>It effectively <em>flattens</em> <code>Box&lt;Box&lt;Item&gt;&gt;</code> into just <code>Box&lt;Item&gt;</code>.
+            </p>
+            <aside class="notes">
+                The key difference in the analogy is that `flatMap` knows how to handle functions that return another
+                box*. It performs the function and then intelligently merges the result back into a single layer of
+                context.
+            </aside>
+        </section>
+        <section>
+            <h3>Monad in Java: `Optional` (again!)</h3>
+            <p><code>Optional</code> is also a Monad because it has <code>flatMap</code>.</p>
+            <div class="code-wrapper">
+                <pre><code class="java" data-line-numbers data-trim>
+record User(String name, String address) {}
+
+// Function: User -> Optional<String>
+Optional&lt;String&gt; findAddress(User user) {
+    return Optional.ofNullable(user.address());
+}
+
+Optional&lt;User&gt; optUser = Optional.of(new User("Alice", "123 Main St"));
+
+// Use flatMap when the function returns an Optional!
+// Input: Optional<User>, Function<User, Optional<String>>
+// Output: Optional<String> (Flattened!)
+Optional&lt;String&gt; address = optUser.flatMap(this::findAddress);
+
+System.out.println(address); // Output: Optional[123 Main St] (NOT nested!)
+
+// Handles empty cases gracefully:
+Optional&lt;User&gt; emptyUser = Optional.empty();
+Optional&lt;String&gt; noAddress = emptyUser.flatMap(this::findAddress); // Skips function call
+System.out.println(noAddress); // Output: Optional.empty
+
+Optional&lt;User&gt; userNoAddress = Optional.of(new User("Bob", null)); // User exists, no address
+Optional&lt;String&gt; bobAddress = userNoAddress.flatMap(this::findAddress); // Calls function, gets Optional.empty
+System.out.println(bobAddress); // Output: Optional.empty
+                </code></pre>
+            </div>
+            <p><code>flatMap</code> allows chaining operations that might return empty Optionals.</p>
+            <aside class="notes">
+                Compare this to the `map` example earlier. By using `flatMap`, we provide the function `findAddress`
+                (which returns an `Optional`), and `flatMap` handles the unwrapping, giving us a clean `Optional
+                <String>` instead of `Optional
+                    <Optional
+                    <String>>`. This makes chaining much cleaner.
+            </aside>
+        </section>
+
+        <section>
+            <h3>Monad in Java: `Stream` (again!)</h3>
+            <p><code>Stream</code> is also a Monad because it has <code>flatMap</code>.</p>
+            <div class="code-wrapper">
+                <pre><code class="java" data-line-numbers data-trim>
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+import java.util.function.Function;
+
+// A list where each element is itself a list of characters (strings for simplicity)
+List&lt;List&lt;String&gt;&gt; listOfLists = Arrays.asList(
+    Arrays.asList("a", "b"),
+    Arrays.asList("c", "d", "e")
+);
+
+// Function: List&lt;String&gt; -> Stream&lt;String&gt; (returns a Stream - a Monad!)
+Function&lt;List&lt;String&gt;, Stream&lt;String&gt;&gt; listToStream = List::stream;
+
+// Using map creates a Stream of Streams (nested context)
+// Output type: Stream&lt;Stream&lt;String&gt;&gt;
+Stream&lt;Stream&lt;String&gt;&gt; streamOfStreams = listOfLists.stream().map(listToStream);
+// To use this, you'd need nested loops/forEach
+
+// Using flatMap flattens the result into a single Stream
+// Input: Stream&lt;List&lt;String&gt;&gt;, Function&lt;List&lt;String&gt;, Stream&lt;String&gt;&gt;
+// Output: Stream&lt;String&gt; (Flattened!)
+Stream&lt;String&gt; flattenedStream = listOfLists.stream().flatMap(listToStream);
+
+flattenedStream.forEach(s -> System.out.print(s + " ")); // Output: a b c d e
+                </code></pre>
+            </div>
+            <p><code>flatMap</code> is essential for flattening nested collections or streams.</p>
+            <aside class="notes">
+                For Streams, `flatMap` is used when your transformation function takes one element and produces
+                *multiple* elements (represented as another Stream or Collection). `flatMap` takes all the resulting
+                streams and concatenates them into one single, flat stream. Very useful for data processing.
+            </aside>
+        </section>
+
+        <section>
+            <h3>Monad Laws (The Rules of `flatMap`)</h3>
+            <p>Like Functors, Monads also have laws that ensure predictable behavior, especially for chaining:</p>
+            <ol>
+                <li><strong>Left Identity:</strong> Wrapping a value then flatMapping `f` is the same as just applying
+                    `f` to the value. <br><code>Monad.of(x).flatMap(f)</code> is equivalent to <code>f(x)</code>.
+                </li>
+                <li><strong>Right Identity:</strong> FlatMapping with the wrapping function (`Monad::of`) doesn't change
+                    the monad. <br><code>monadInstance.flatMap(Monad::of)</code> is equivalent to
+                    <code>monadInstance</code>.
+                </li>
+                <li><strong>Associativity:</strong> How you group chained `flatMap` calls doesn't matter.<br><code>m.flatMap(f).flatMap(g)</code>
+                    is equivalent to <code>m.flatMap(x -> f(x).flatMap(g))</code>.
+                </li>
+            </ol>
+            <small>(You don't usually need to *prove* these, but rely on library types like `Optional` and `Stream`
+                obeying them.)</small>
+            <aside class="notes">
+                Again, don't get bogged down by the formulas. The essence is that `flatMap` allows reliable, predictable
+                chaining of operations within the monadic context. These laws guarantee that chaining works as you'd
+                intuitively expect.
+            </aside>
+        </section>
+
+        <section>
+            <h3>Functor vs. Monad Summary</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Functor</th>
+                    <th>Monad</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Core Idea</td>
+                    <td>Mapping over a context</td>
+                    <td>Sequencing/Chaining operations within a context</td>
+                </tr>
+                <tr>
+                    <td>Key Method(s)</td>
+                    <td><code>map(A -> B)</code></td>
+                    <td><code>flatMap(A -> Monad&lt;B&gt;)</code> <br>+ <code>map(A -> B)</code> <br>+ <code>unit/of(A
+                        -> Monad&lt;A&gt;)</code></td>
+                </tr>
+                <tr>
+                    <td>Handles Function Returning...</td>
+                    <td>Plain value <code>B</code></td>
+                    <td>Contextual value <code>Monad&lt;B&gt;</code></td>
+                </tr>
+                <tr>
+                    <td>Result of applying <code>Fn(A -> Context&lt;B&gt;)</code></td>
+                    <td><code>Context&lt;Context&lt;B&gt;&gt;</code> (via <code>map</code>)</td>
+                    <td><code>Context&lt;B&gt;</code> (via <code>flatMap</code>)</td>
+                </tr>
+                <tr>
+                    <td>Analogy</td>
+                    <td>Box + Tool (map)</td>
+                    <td>Smart Box + Tool that returns Box (flatMap)</td>
+                </tr>
+                </tbody>
+            </table>
+            <p style="text-align: center; margin-top: 20px;"><strong>All Monads are Functors, but not all Functors are
+                Monads.</strong></p>
+            <aside class="notes">
+                This table summarizes the key differences. Functors are about applying simple transformations inside a
+                context. Monads add the ability to chain operations where each step might produce a new context,
+                handling the flattening automatically via `flatMap`. Monads are a specialized, more powerful type of
+                Functor.
+            </aside>
+        </section>
+
+        <section>
+            <h3>Benefits in Java</h3>
+            <ul>
+                <li><strong>Cleaner Null Handling:</strong> <code>Optional.map</code>/<code>flatMap</code> chains avoid
+                    deep nesting of <code>if (x != null)</code> checks. Code becomes more linear and readable.
+                </li>
+                <li><strong>Simplified Asynchronous Code:</strong> <code>CompletableFuture.thenApply</code> (map) /
+                    <code>thenCompose</code> (flatMap) chain async operations without complex callback management
+                    ("callback hell").
+                </li>
+                <li><strong>Declarative Data Pipelines:</strong> <code>Stream.map</code>/<code>flatMap</code> build
+                    complex data transformations concisely and expressively.
+                </li>
+                <li><strong>Reduced Boilerplate:</strong> Abstracting the "context handling" logic (checking for
+                    presence, iterating, handling async results) into reusable methods.
+                </li>
+                <li><strong>Improved Readability & Intent:</strong> Code clearly expresses a sequence of operations or
+                    transformations.
+                </li>
+            </ul>
+            <aside class="notes">
+                So, why use these patterns? They lead to code that is often shorter, easier to read, less prone to
+                certain errors (like NullPointerExceptions), and better at expressing complex workflows, especially with
+                Java 8+ features.
+            </aside>
+        </section>
+
+        <section>
+            <h3>Conclusion</h3>
+            <ul>
+                <li><strong>Functors:</strong> Contexts you can <code>map</code> over (apply <code>A -> B</code>
+                    inside). Like a box with robotic arms.
+                </li>
+                <li><strong>Monads:</strong> Functors you can also <code>flatMap</code> over (chain <code>A -> Monad&lt;B&gt;</code>,
+                    flattening the result). Like a smart box that avoids nesting.
+                </li>
+                <li>Common Java examples: <code>Optional</code>, <code>Stream</code>, <code>CompletableFuture</code>
+                    embody these patterns.
+                </li>
+                <li>They provide structured ways to manage "context" (optionality, collections, async results, potential
+                    errors).
+                </li>
+                <li>Understanding them helps write cleaner, more robust, and more expressive Java code.</li>
+                <li>Don't fear the terms; recognize and leverage the patterns!</li>
+            </ul>
+            <aside class="notes">
+                To wrap up: Functors let you apply functions inside contexts. Monads let you chain functions that return
+                contexts, keeping the structure flat. You're likely already using them via Optional, Stream, and
+                CompletableFuture. Recognizing the pattern helps you use them more effectively.
+            </aside>
+        </section>
+
+        <section>
+            <h3>Questions?</h3>
+            <img data-src="https://placehold.co/600x400/87CEEB/FFFFFF?text=Any+Questions%3F" alt="Q&A Placeholder"
+                 style="border: none; box-shadow: none; margin-top: 40px;">
+            <aside class="notes">
+                Now I'd be happy to take any questions you might have.
+            </aside>
+        </section>
+
+    </div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
+</script>
+</body>
+</html>
