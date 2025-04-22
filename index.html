@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -155,13 +155,15 @@
             text-align: center;
             font-style: italic;
         }
-
+        .reveal .slides section .fragment.visible.highlight-green {
+            color: green !important; /* Or background-color, etc. */
+        }
     </style>
 </head>
 <body>
 <div class="reveal">
     <div class="slides">
-        <section>
+        <section data-auto-animate>
             <h3>Functors and Monads for Java Developers</h3>
             <h3>Demystifying Functional Concepts</h3>
             <p style="text-align: center;"><small>Magnus Smith</small></p>
@@ -171,14 +173,14 @@
                 practical examples.
             </aside>
         </section>
-        <section>
+        <section data-auto-animate>
             <h3>Why Are We Here?</h3>
             <ul>
                 <li class="fragment custom blur highlight-current-green" data-fragment-index="1">Functional programming
                     concepts are increasingly relevant in Java.
                 </li>
                 <li class="fragment custom blur highlight-current-green" data-fragment-index="2">Functors and Monads
-                    sound complex, but the underlying ideas are powerful and useful.
+                    might sound complex when unfamiliar, but the underlying ideas are powerful and useful.
                 </li>
             </ul>
             <aside class="notes">
@@ -187,7 +189,7 @@
                 We'll see how Java already uses these patterns.
             </aside>
         </section>
-        <section>
+        <section data-auto-animate>
             <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">Goal:</h3>
             <ul>
                 <li class="fragment custom blur highlight-current-green check" data-fragment-index="1"> Understand <em>what</em>
@@ -197,13 +199,8 @@
                     intuition and practical application, not deep category theory.
                 </li>
             </ul>
-            <aside class="notes">
-                Why should you, as a Java developer, care about these? Because they help write cleaner, more robust
-                code, especially when dealing with common problems like nulls, collections, or asynchronous operations.
-                We'll see how Java already uses these patterns.
-            </aside>
         </section>
-        <section>
+        <section data-auto-animate>
             <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">The Problem: Handling
                 "Context"</h3>
             <p>Often, our values don't exist in isolation. They come with some form of "context":</p>
@@ -221,7 +218,7 @@
                 boilerplate and errors.
             </aside>
         </section>
-        <section>
+        <section data-auto-animate>
             <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">The Problem: Handling
                 "Context"</h3>
             <ul>
@@ -239,19 +236,14 @@
                 boilerplate and errors.
             </aside>
         </section>
-        <section>
+        <section data-auto-animate>
             <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">Challenge:</h3>
             <p class="fragment custom blur highlight-current-green check" data-fragment-index=1">How do we apply
                 functions or transformations to the value(s) <em>inside</em> this context, without manually unpacking
                 and repacking them every time?</p>
-            <aside class="notes">
-                Think about everyday Java code. You check for null, you iterate over lists, you handle futures. These
-                all involve values wrapped in some kind of context. Manually managing this context can lead to
-                boilerplate and errors.
-            </aside>
         </section>
 
-        <section>
+        <section data-auto-animate>
             <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">Enter the Functor!</h3>
             <p><em>A design pattern for types that contain value(s).</em></p>
             <ul>
@@ -291,7 +283,7 @@
                 in the `map` method.
             </aside>
         </section>
-        <section>
+        <section data-auto-animate>
             <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">Enter the Functor!</h3>
             <p><em>It lifts a function into the world of contexts.</em></p>
 
@@ -304,7 +296,6 @@
                         class="fragment custom blur highlight-red"
                         data-fragment-index="4"> transforms <code>Functor&lt;A&gt;</code> to <code>Functor&lt;B&gt;</code>.</span>
             </p>
-
             <aside class="notes">
                 In simple terms, a functor is a design pattern that allows you to apply a function to elements within a
                 container without having to extract those elements manually. Think of it as a “mappable” container.
@@ -314,21 +305,14 @@
             </aside>
         </section>
 
-        <section>
+        <section data-auto-animate>
             <h3>Functor Analogy: The Magic Box 🎁</h3>
-
             <p>Imagine a sealed, transparent box (the Functor context, e.g., <code>Optional</code>) containing an item
                 (the value, e.g., a <code>String</code>).</p>
             <p>You have a tool (a function, e.g., <code>String::length</code>) that can transform the item.</p>
-
-            <aside class="notes">
-                This analogy highlights key aspects: the context (box) is preserved, the function operates inside, and
-                you get a new context back. If the box was empty, the arms do nothing and return a new empty box.
-            </aside>
         </section>
-        <section>
+        <section data-auto-animate>
             <h3>Functor Analogy: The Magic Box 🎁</h3>
-
             <p>The <code>map</code> operation is like having robotic arms on the box. You give the arms your tool (the
                 function), and they reach *inside* the box, use the tool on the item, and place the *transformed* item
                 into a *new*, identical sealed box.</p>
@@ -340,7 +324,7 @@
                 you get a new context back. If the box was empty, the arms do nothing and return a new empty box.
             </aside>
         </section>
-        <section>
+        <section data-auto-animate>
             <h3>Functor: <code>Optional&lt;T&gt;</code></h3>
             <p class="fragment custom blur highlight-current-green">Context: <span
                     class="fragment custom blur highlight-current-red"><em>optionality</em></span></p>
@@ -350,21 +334,21 @@
 Optional&lt;String&gt; optName = Optional.of("Alice");
 
 // Function: String -> Integer (length)
-Function&lt;String, Integer&gt; getNameLength = String::length;
+Function&lt;String, Integer&gt; nameLength = String::length;
 
 // map applies the function *inside* the Optional context
 // Input: Optional&lt;String&gt;, Function&lt;String, Integer>
 // Output: Optional&lt;Integer&gt;
-Optional&lt;Integer> optLength = optName.map(getNameLength);
+Optional&lt;Integer> optLength = optName.map(nameLength);
 
-System.out.println(optLength); // Output: Optional[5]
+println(optLength); // Output: Optional[5]
 
 // What if the Optional is empty?
 Optional&lt;String&gt; emptyOpt = Optional.empty();
 // Function is never called
-Optional&lt;Integer&gt; emptyLength = emptyOpt.map(getNameLength);
+Optional&lt;Integer&gt; emptyLength = emptyOpt.map(nameLength);
 // Output: Optional.empty (context preserved)
-System.out.println(emptyLength);
+println(emptyLength);
 				</code></pre>
             </div>
             <aside class="notes">
@@ -374,14 +358,14 @@ System.out.println(emptyLength);
             </aside>
         </section>
 
-        <section>
+        <section data-auto-animate>
             <h3>Functor: <code>Stream&lt;T&gt;</code></h3>
             <p class="fragment custom blur highlight-current-green">Context: <span
                     class="fragment custom blur highlight-current-red"><em>a sequence of elements</em></span></p>
             <div class="code-wrapper">
                 <pre><code class="java" data-noescape data-trim data-line-numbers>
-List&lt;String&gt; names = Arrays.asList("Bob", "Charlie", "David");
-Stream&lt;String&gt; nameStream = names.stream(); // Context: Stream&lt;String&gt;
+
+Stream&lt;String&gt; nameStream = Stream.of("Bob", "Charlie", "David");
 
 // Function: String -> String (uppercase)
 Function&lt;String, String&gt; toUpper = String::toUpperCase;
@@ -405,12 +389,22 @@ upperCaseStream.forEach(System.out::println);
             </aside>
         </section>
 
-        <section>
+        <section data-auto-animate>
             <h3>Functor Laws</h3>
             <p>For a type to be a <em>well-behaved</em> Functor, its <code>map</code> should obey two laws:</p>
             <p class="fragment custom blur highlight-green"><strong>1. Identity:</strong>
                 <span class="fragment custom blur highlight-current-red"><br><code>functor.map(x -> x)</code> should be equivalent to <code>functor</code>.</span>
             </p>
+
+        </section>
+        <section data-auto-animate>
+            <h3>Functor Laws</h3>
+
+            <p class="fragment custom blur highlight-green"><strong>2. Composition:</strong>
+                <span class="fragment custom blur highlight-current-red"><br>Mapping with two functions sequentially is the same as mapping with the composition of those functions.</span>
+            </p>
+            <p class="fragment custom blur highlight-current-red"><code>functor.map(f).map(g)</code> is equivalent to
+                <code>functor.map(x -> g(f(x)))</code><br></p>
             <aside class="notes">
                 These laws might seem abstract, but they just guarantee that `map` doesn't do anything weird. It behaves
                 predictably, like normal function application. `Optional` and `Stream` follow these laws.
@@ -419,62 +413,32 @@ upperCaseStream.forEach(System.out::println);
                 <p> Mapping with the identity function (<code>x -> x</code>) must not change the functor.</p>
             </aside>
         </section>
-        <section>
-            <h3>Functor Laws</h3>
-
-            <p class="fragment custom blur highlight-green"><strong>2. Composition:</strong>
-                <span class="fragment custom blur highlight-current-red"><br>Mapping with two functions sequentially is the same as mapping with the composition of those functions.</span>
-            </p>
-            <p class="fragment custom blur highlight-current-red"><code>functor.map(f).map(g)</code> is equivalent to
-                <code>functor.map(x -> g(f(x)))</code><br></p>
-
-            <aside class="notes">
-                These laws might seem abstract, but they just guarantee that `map` doesn't do anything weird. It behaves
-                predictably, like normal function application. `Optional` and `Stream` follow these laws.
-                Mapping with the identity function (<code>x -> x</code>) must not change the functor.
-                <small>(These ensure <code>map</code> works intuitively, just like applying functions normally, but
-                    within the context.)</small>
-
-            </aside>
-        </section>
-        <section>
+        <section data-auto-animate>
             <h3>The Problem with <code>map</code></h3>
-            <p>What happens if the function we want to <code>map</code> *also* returns a value wrapped in the same
-                context?</p>
+            <p><em>What happens if the function we want to <code>map</code> <strong>also</strong> returns a value wrapped in the same
+                context?</em></p>
 
-            <p>Uh oh! We get nested contexts: <code>Optional&lt;Optional&lt;String&gt;&gt;</code>. This quickly becomes
-                awkward to work with.</p>
-            <aside class="notes" data-noescape>
-                Here's where Functors fall short. If our transformation function itself returns a contextual value (like
-                another Optional), `map` just wraps it again, leading to nested structures like `Optional
-                <Optional
-                <T>>` or `Stream
-                    <Stream
-                    <T>>`. This is often not what we want.
-            </aside>
+            <p class="fragment custom blur highlight-current-green">Nested contexts: <span class="fragment custom blur highlight-current-red"><code>Optional&lt;Optional&lt;String&gt;&gt;</code></span></p>
         </section>
-        <section>
+        <section data-auto-animate>
             <h3>The Problem with <code>map</code></h3>
             <div class="code-wrapper">
                 <pre><code class="java" data-line-numbers data-trim>
-// Represents a user, address might be null
-record User(String name, String address) {}
 
-// Function that looks up a user and returns their address *as an Optional*
-Optional&lt;String&gt; findAddress(User user) {
-    // In real life, this might involve DB lookup, etc.
-    return Optional.ofNullable(user.address());
+// Function that looks up a userId and returns their User *as an Optional*
+Optional&lt;User&gt; findUser(String userId) {
+  // ... logic to fetch user from database or return Optional.empty() ...
 }
 
-Optional&lt;User&gt; optUser = Optional.of(new User("Alice", "123 Main St"));
+Optional&lt;Address&gt; findAddress(User user) {
+  // ... logic to fetch address, or return Optional.empty() if none ...
+}
 
-// Let's try using map with findAddress...
-// map expects Function&lt;User, String&gt;, but gets Function&lt;User, Optional&lt;String&gt;&gt;
-// map wraps the result automatically...
-Optional&lt;Optional&lt;String&gt;&gt; nestedAddress = optUser.map(this::findAddress);
+Optional&lt;User&gt; optUser =  findUser(String userId);
+// Nested contexts: `Optional` and `Optional`
+Optional&lt;Optional&lt;Address&gt;&gt; nestedOptAddress
+                    = optUser.map(this::findAddress);
 
-System.out.println(nestedAddress);
-// Output: Optional[Optional[123 Main St]]
                 </code></pre>
             </div>
 
@@ -487,26 +451,26 @@ System.out.println(nestedAddress);
             </aside>
         </section>
 
-        <section>
+        <section data-auto-animate>
             <h3>Enter the Monad!</h3>
-            <p>A Monad is a Functor with <em>additional powers</em>.</p>
-            <p>It's designed specifically to handle sequences of operations where each step might return a value <em>already
-                wrapped</em> in the Monad's context.</p>
+            <p>A Monad <strong>is</strong> a Functor with <em>additional features</em>.</p>
+            <p class="fragment custom blur highlight-green">It's a pattern designed specifically to handle:</p><br>
+            <span class="fragment custom blur highlight-blue"><em>Sequences of operations where each step might return a value <strong>already
+                wrapped</strong> in the context.</em></span>
             <aside class="notes">
                 Monads build on Functors. They add the crucial `flatMap` operation. `flatMap` is like `map`, but it's
                 specifically for functions that *already* return a monadic value. Its superpower is preventing the
                 nesting we just saw.
             </aside>
         </section>
-        <section>
+        <section data-auto-animate>
             <h3>Enter the Monad!</h3>
-
             <p class="fragment custom blur highlight-green" data-fragment-index=1">The key operation:<span
                     class="fragment custom blur highlight-red"
                     data-fragment-index="2"><code>flatMap</code></span></p>
             <p class="fragment custom blur highlight-current-green" data-fragment-index=3"><code>f: A -> Monad&lt;B&gt;</code>
-				<span class="fragment custom blur highlight-red" data-fragment-index="4"><br>flatMap transforms
-					<br><code>Monad&lt;A&gt;</code> to <code>Monad&lt;B&gt;</code>.</span></p>
+                <span class="fragment custom blur highlight-red" data-fragment-index="4"><br>flatMap transforms
+                    <br><code>Monad&lt;A&gt;</code> to <code>Monad&lt;B&gt;</code>.</span></p>
             <p  class="fragment custom blur" data-fragment-index="4" >Crucially, it <em>maps</em> then <strong>flattens</strong> the result, avoiding the nesting problem!</p>
             <aside class="notes">
                 Monads build on Functors. They add the crucial `flatMap` operation. `flatMap` is like `map`, but it's
@@ -518,7 +482,7 @@ System.out.println(nestedAddress);
 
             </aside>
         </section>
-        <section>
+        <section data-auto-animate>
             <h3>Enter the Monad!</h3>
 			<p class="fragment custom blur highlight-green" data-fragment-index=1">Lift a value into the context: <span
 					class="fragment custom blur highlight-red"
@@ -533,22 +497,20 @@ System.out.println(nestedAddress);
 					In Java, typically static factory methods like <code>Optional.of()</code>, <code>Stream.of()</code>.</p>
             </aside>
         </section>
-        <section>
+        <section data-auto-animate>
             <h3>Monad Analogy: The Smart Box 🎁➡️🎁</h3>
-
             <p>Now, the function you want to apply <em>itself</em> produces a <em>new</em> sealed box containing the result</p><br>
 				<code>f: User -> Optional&lt;Address&gt;</code>)
-            <p>If you just used <code>map</code> (the Functor way), you'd get a box containing another box (<code>Optional&lt;Optional&lt;Address&gt;&gt;</code>).
-            </p>
+            <p>If you just used <code>map</code> (the Functor way), you'd get a box containing another box (<code>Optional&lt;Optional&lt;Address&gt;&gt;</code>).</p>
             <aside class="notes">
                 The key difference in the analogy is that `flatMap` knows how to handle functions that return *another
                 box*. It performs the function and then intelligently merges the result back into a single layer of
                 context.
             </aside>
         </section>
-        <section>
+        <section data-auto-animate>
             <h3>Monad Analogy: The Smart Box 🎁➡️🎁</h3>
-            <p>The <code>flatMap</code> operation (the Monad way) is smarter:</p>
+            <p>The <code>flatMap</code> operation is smarter:</p>
             <ol>
                 <li>It applies the function inside the first box to get the <em>new inner box</em>.</li>
                 <li>It then <em>unpacks</em> this new inner box.</li>
@@ -565,78 +527,52 @@ System.out.println(nestedAddress);
                 context.
             </aside>
         </section>
-        <section>
-            <h3>Monad in Java: `Optional` (again!)</h3>
-            <p><code>Optional</code> is also a Monad because it has <code>flatMap</code>.</p>
+        <section data-auto-animate>
+            <h3>Monad: <code>Optional</code></h3>
+            <p><code>Optional</code> is a Monad => <span class="fragment highlight-red"><code>flatMap</code></span>
             <div class="code-wrapper">
                 <pre><code class="java" data-line-numbers data-trim>
-record User(String name, String address) {}
-
-// Function: User -> Optional<String>
-Optional&lt;String&gt; findAddress(User user) {
-    return Optional.ofNullable(user.address());
+Optional&lt;User&gt; findUser(String userId) {
+  // ... logic to fetch user from database or return Optional.empty() ...
 }
 
-Optional&lt;User&gt; optUser = Optional.of(new User("Alice", "123 Main St"));
+Optional&lt;Address&gt; findAddress(User user) {
+  // ... logic to fetch address, or return Optional.empty() if none ...
+}
 
+Optional&lt;User&gt; optUser =  findUser(String userId);
 // Use flatMap when the function returns an Optional!
-// Input: Optional<User>, Function<User, Optional<String>>
-// Output: Optional<String> (Flattened!)
-Optional&lt;String&gt; address = optUser.flatMap(this::findAddress);
-
-System.out.println(address); // Output: Optional[123 Main St] (NOT nested!)
-
-// Handles empty cases gracefully:
-Optional&lt;User&gt; emptyUser = Optional.empty();
-Optional&lt;String&gt; noAddress = emptyUser.flatMap(this::findAddress); // Skips function call
-System.out.println(noAddress); // Output: Optional.empty
-
-Optional&lt;User&gt; userNoAddress = Optional.of(new User("Bob", null)); // User exists, no address
-Optional&lt;String&gt; bobAddress = userNoAddress.flatMap(this::findAddress); // Calls function, gets Optional.empty
-System.out.println(bobAddress); // Output: Optional.empty
+// Input: Optional&lt;User&gt;, Function&lt;User, Optional&lt;Address&gt;&gt;
+// Output: Optional&lt;Address&gt; (Flattened!)
+Optional&lt;Address&gt; nestedOptAddress
+                    = optUser.flatMap(this::findAddress);
                 </code></pre>
             </div>
             <p><code>flatMap</code> allows chaining operations that might return empty Optionals.</p>
-            <aside class="notes">
-                Compare this to the `map` example earlier. By using `flatMap`, we provide the function `findAddress`
-                (which returns an `Optional`), and `flatMap` handles the unwrapping, giving us a clean `Optional
-                <String>` instead of `Optional
-                    <Optional
-                    <String>>`. This makes chaining much cleaner.
-            </aside>
         </section>
 
-        <section>
-            <h3>Monad in Java: `Stream` (again!)</h3>
-            <p><code>Stream</code> is also a Monad because it has <code>flatMap</code>.</p>
+        <section data-auto-animate>
+            <h3>Monad: <code>Stream</code></h3>
+            <p><code>Stream</code> is a Monad => <span class="fragment custom highlight-red"><code>flatMap</code></span></p>
             <div class="code-wrapper">
-                <pre><code class="java" data-line-numbers data-trim>
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
-import java.util.function.Function;
-
-// A list where each element is itself a list of characters (strings for simplicity)
-List&lt;List&lt;String&gt;&gt; listOfLists = Arrays.asList(
-    Arrays.asList("a", "b"),
-    Arrays.asList("c", "d", "e")
-);
+                <pre><code class="java" data-trim>
+// A list where each element is itself a list of Strings
+List&lt;List&lt;String&gt;&gt; listOfLists = asList(asList("a", "b"),
+                                        asList("c", "d", "e"));
 
 // Function: List&lt;String&gt; -> Stream&lt;String&gt; (returns a Stream - a Monad!)
 Function&lt;List&lt;String&gt;, Stream&lt;String&gt;&gt; listToStream = List::stream;
 
 // Using map creates a Stream of Streams (nested context)
 // Output type: Stream&lt;Stream&lt;String&gt;&gt;
-Stream&lt;Stream&lt;String&gt;&gt; streamOfStreams = listOfLists.stream().map(listToStream);
-// To use this, you'd need nested loops/forEach
+Stream&lt;Stream&lt;String&gt;&gt; nestedStream = listOfLists.stream().map(listToStream);
 
 // Using flatMap flattens the result into a single Stream
 // Input: Stream&lt;List&lt;String&gt;&gt;, Function&lt;List&lt;String&gt;, Stream&lt;String&gt;&gt;
 // Output: Stream&lt;String&gt; (Flattened!)
 Stream&lt;String&gt; flattenedStream = listOfLists.stream().flatMap(listToStream);
 
-flattenedStream.forEach(s -> System.out.print(s + " ")); // Output: a b c d e
-                </code></pre>
+flattenedStream.forEach(s -> System.out.print(s + " ")); // Output: a b c d e</code></pre>
             </div>
             <p><code>flatMap</code> is essential for flattening nested collections or streams.</p>
             <aside class="notes">
@@ -646,99 +582,106 @@ flattenedStream.forEach(s -> System.out.print(s + " ")); // Output: a b c d e
             </aside>
         </section>
 
-        <section>
-            <h3>Monad Laws (The Rules of `flatMap`)</h3>
-            <p>Like Functors, Monads also have laws that ensure predictable behavior, especially for chaining:</p>
-            <ol>
-                <li><strong>Left Identity:</strong> Wrapping a value then flatMapping `f` is the same as just applying
-                    `f` to the value. <br><code>Monad.of(x).flatMap(f)</code> is equivalent to <code>f(x)</code>.
-                </li>
-                <li><strong>Right Identity:</strong> FlatMapping with the wrapping function (`Monad::of`) doesn't change
-                    the monad. <br><code>monadInstance.flatMap(Monad::of)</code> is equivalent to
-                    <code>monadInstance</code>.
-                </li>
-                <li><strong>Associativity:</strong> How you group chained `flatMap` calls doesn't matter.<br><code>m.flatMap(f).flatMap(g)</code>
-                    is equivalent to <code>m.flatMap(x -> f(x).flatMap(g))</code>.
-                </li>
-            </ol>
-            <small>(You don't usually need to *prove* these, but rely on library types like `Optional` and `Stream`
-                obeying them.)</small>
+        <section data-auto-animate>
+            <h3>Monad Laws: <code>flatMap</code></h3>
+            <p class="fragment custom blur highlight-green" data-fragment-index="0"><strong>1. Left Identity:</strong></p>
+            <p class="fragment custom blur" data-fragment-index="1"><em>Wrapping a value then flatMapping <code>f</code> is the same as just applying<code>f</code> to the value.</em></p>
+            <p class="fragment custom blur highlight-red" data-fragment-index="1"><code>Monad.of(x).flatMap(f) <=> f(x)</code>
+        </p>
+        </section>
+        <section data-auto-animate>
+            <h3>Monad Laws: <code>flatMap</code></h3>
+            <p class="fragment custom blur highlight-green" data-fragment-index="0"><strong>2. Right Identity:</strong></p>
+            <p class="fragment custom blur" data-fragment-index="1"><em>FlatMapping with the wrapping function <code>Monad::of</code> doesn't change the monad.</em></p>
+            <p class="fragment custom blur highlight-red" data-fragment-index="1"><code>m.flatMap(Monad::of) <=> m</code></p>
             <aside class="notes">
                 Again, don't get bogged down by the formulas. The essence is that `flatMap` allows reliable, predictable
                 chaining of operations within the monadic context. These laws guarantee that chaining works as you'd
                 intuitively expect.
             </aside>
         </section>
-
-        <section>
-            <h3>Functor vs. Monad Summary</h3>
-            <table>
-                <thead>
-                <tr>
-                    <th>Feature</th>
-                    <th>Functor</th>
-                    <th>Monad</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Core Idea</td>
-                    <td>Mapping over a context</td>
-                    <td>Sequencing/Chaining operations within a context</td>
-                </tr>
-                <tr>
-                    <td>Key Method(s)</td>
-                    <td><code>map(A -> B)</code></td>
-                    <td><code>flatMap(A -> Monad&lt;B&gt;)</code> <br>+ <code>map(A -> B)</code> <br>+ <code>unit/of(A
-                        -> Monad&lt;A&gt;)</code></td>
-                </tr>
-                <tr>
-                    <td>Handles Function Returning...</td>
-                    <td>Plain value <code>B</code></td>
-                    <td>Contextual value <code>Monad&lt;B&gt;</code></td>
-                </tr>
-                <tr>
-                    <td>Result of applying <code>Fn(A -> Context&lt;B&gt;)</code></td>
-                    <td><code>Context&lt;Context&lt;B&gt;&gt;</code> (via <code>map</code>)</td>
-                    <td><code>Context&lt;B&gt;</code> (via <code>flatMap</code>)</td>
-                </tr>
-                <tr>
-                    <td>Analogy</td>
-                    <td>Box + Tool (map)</td>
-                    <td>Smart Box + Tool that returns Box (flatMap)</td>
-                </tr>
-                </tbody>
-            </table>
-            <p style="text-align: center; margin-top: 20px;"><strong>All Monads are Functors, but not all Functors are
-                Monads.</strong></p>
+        <section data-auto-animate>
+            <h3>Monad Laws: <code>flatMap</code></h3>
+            <p class="fragment custom blur highlight-green" data-fragment-index="0"><strong>3. Associativity:</strong></p>
+            <p class="fragment custom blur" data-fragment-index="1"><em>How you group chained <code>flatMap</code> calls doesn't matter.</em></p>
+            <p class="fragment custom blur highlight-red" data-fragment-index="1"><code>m.flatMap(f).flatMap(g) <=> m.flatMap(x -> f(x).flatMap(g))</code></p>
             <aside class="notes">
-                This table summarizes the key differences. Functors are about applying simple transformations inside a
-                context. Monads add the ability to chain operations where each step might produce a new context,
-                handling the flattening automatically via `flatMap`. Monads are a specialized, more powerful type of
-                Functor.
+                <small>(You don't usually need to *prove* these, but rely on library types like `Optional` and `Stream`
+                    obeying them.)</small>
             </aside>
         </section>
 
-        <section>
+        <section data-auto-animate>
+            <h3>Functor vs Monad</h3>
+            <p><em>Core Idea:</em></p>
+            <p data-id="functor-label-1" class="fragment custom blur highlight-green" data-fragment-index="0"><strong>Functor:</strong></p>
+            <p data-id="functor-desc-1" class="fragment custom blur" data-fragment-index="1"><em>Mapping over a context.</em></p>
+            <p data-id="monad-label-1" class="fragment custom blur highlight-green" data-fragment-index="2"><strong>Monad:</strong></p>
+            <p data-id="monad-desc-1" class="fragment custom blur" data-fragment-index="3"><em>Sequencing/Chaining operations within a context</em></p>
+        </section>
+
+        <section data-auto-animate>
+            <h3>Functor vs Monad</h3>
+            <p><em>Key Method(s):</em></p>
+            <p data-id="functor-label-2" class="fragment custom blur highlight-green" data-fragment-index="0"><strong>Functor:</strong></p>
+            <p data-id="functor-desc-2" class="fragment custom blur" data-fragment-index="1"><em><code>map(A -> B)</code></em></p>
+            <p data-id="monad-label-2" class="fragment custom blur highlight-green" data-fragment-index="2"><strong>Monad:</strong></p>
+            <p data-id="monad-desc-2" class="fragment custom blur" data-fragment-index="3"><em><code>flatMap(A -> Monad&lt;B&gt;)</code> <br>+ <code>map(A -> B)</code> <br>+ <code>of(A -> Monad&lt;A&gt;)</code></em></p>
+        </section>
+
+        <section data-auto-animate>
+            <h3>Functor vs Monad</h3>
+            <p><em>Handles Function Returning...</em></p>
+            <p  data-id="functor-label-3" class="fragment custom blur highlight-green" data-fragment-index="0"><strong>Functor:</strong></p>
+            <p data-id="functor-desc-3" class="fragment custom blur" data-fragment-index="1"><em>Plain value</em></p>
+            <p data-id="monad-label-3" class="fragment custom blur highlight-green" data-fragment-index="2"><strong>Monad:</strong></p>
+            <p data-id="monad-desc-3" class="fragment custom blur" data-fragment-index="3"><em>Contextual value <code>Monad&lt;B&gt;</code></em></p>
+        </section>
+
+        <section  data-auto-animate>
+            <h3>Functor vs Monad</h3>
+            <p><em>Result of applying <code>Fn(A -> Context&lt;B&gt;)</code></em><p>
+            <p data-id="functor-label-4" class="fragment custom blur highlight-green" data-fragment-index="0"><strong>Functor:</strong></p>
+            <p data-id="functor-desc-4" class="fragment custom blur" data-fragment-index="1"><em><code>Context&lt;Context&lt;B&gt;&gt;</code> (via <code>map</code>)</em></p>
+            <p data-id="monad-label-4" class="fragment custom blur highlight-green" data-fragment-index="3"><strong>Monad:</strong></p>
+            <p data-id="monad-desc-4" class="fragment custom blur" data-fragment-index="4"><em><code>Context&lt;B&gt;</code> (via <code>flatMap</code>)</em></p>
+        </section>
+
+        <section data-auto-animate>
+            <h3>Functor vs Monad</h3>
+            <p><em>Analogy:</em></p>
+            <p data-id="functor-label-5" class="fragment custom blur highlight-green" data-fragment-index="0"><strong>Functor:</strong></p>
+            <p data-id="functor-desc-5" class="fragment custom blur" data-fragment-index="1"><em>Box + Tool (map)</em></p>
+            <p data-id="monad-label-5" class="fragment custom blur highlight-green" data-fragment-index="3"><strong>Monad:</strong></p>
+            <p data-id="monad-desc-5" class="fragment custom blur" data-fragment-index="4"><em>Smart Box + Tool that returns Box (flatMap)</em></p>
+            <p data-id="functor-monad-5" class="fragment custom blur highlight-green" data-fragment-index="5" style="text-align: center; margin-top: 20px;"><strong>All Monads are Functors, but not all Functors are
+                Monads.</strong></p>
+        </section>
+
+        <section data-auto-animate>
             <h3>Benefits in Java</h3>
-            <ul>
-                <li><strong>Cleaner Null Handling:</strong> <code>Optional.map</code>/<code>flatMap</code> chains avoid
-                    deep nesting of <code>if (x != null)</code> checks. Code becomes more linear and readable.
-                </li>
-                <li><strong>Simplified Asynchronous Code:</strong> <code>CompletableFuture.thenApply</code> (map) /
-                    <code>thenCompose</code> (flatMap) chain async operations without complex callback management
-                    ("callback hell").
-                </li>
-                <li><strong>Declarative Data Pipelines:</strong> <code>Stream.map</code>/<code>flatMap</code> build
-                    complex data transformations concisely and expressively.
-                </li>
-                <li><strong>Reduced Boilerplate:</strong> Abstracting the "context handling" logic (checking for
-                    presence, iterating, handling async results) into reusable methods.
-                </li>
-                <li><strong>Improved Readability & Intent:</strong> Code clearly expresses a sequence of operations or
-                    transformations.
-                </li>
-            </ul>
+            <p class="fragment custom highlight-green" data-fragment-index="1"><strong>Cleaner Null Handling:</strong></p>
+            <p><code>Optional.map</code>/<code>flatMap</code> chains avoid deep nesting of <code>if (x != null)</code> checks.</p>
+            <p class="fragment custom blur highlight-blue" data-fragment-index="2"><em>Code becomes more linear and readable.</em></p>
+        </section>
+        <section data-auto-animate>
+            <h3>Benefits in Java</h3>
+            <p class="fragment custom highlight-green" data-fragment-index="1"><strong>Simplified Asynchronous Code:</strong></p>
+            <p><code>CompletableFuture.thenApply</code> (map) / <code>thenCompose</code> (flatMap).</p>
+            <p class="fragment custom blur highlight-blue" data-fragment-index="2"><em>chain async operations without complex callback management => "callback hell".</em></p>
+        </section>
+        <section data-auto-animate>
+            <h3>Benefits in Java</h3>
+            <p class="fragment custom highlight-green" data-fragment-index="1"><strong>Declarative Data Pipelines:</strong></p>
+            <p><code>Stream.map</code>/<code>flatMap</code> </p>
+            <p class="fragment custom blur highlight-blue" data-fragment-index="2"><em>build complex data transformations concisely and expressively.</em></p>
+        </section>
+        <section data-auto-animate>
+            <h3>Benefits in Java</h3>
+            <p class="fragment custom blur highlight-green" data-fragment-index="1"><strong>Reduced Boilerplate:</strong></p>
+            <p class="fragment custom blur highlight-blue" data-fragment-index="2"><em>Abstracting the "context handling" logic (checking for presence, iterating, handling async results) into reusable methods.</em></p>
+            <p class="fragment custom blur highlight-green" data-fragment-index="3"><strong>Improved Readability & Intent:</strong></p>
+            <p class="fragment custom blur highlight-blue" data-fragment-index="4"><em>Code clearly expresses a sequence of operations or transformations.</em></p>
             <aside class="notes">
                 So, why use these patterns? They lead to code that is often shorter, easier to read, less prone to
                 certain errors (like NullPointerExceptions), and better at expressing complex workflows, especially with
@@ -746,24 +689,10 @@ flattenedStream.forEach(s -> System.out.print(s + " ")); // Output: a b c d e
             </aside>
         </section>
 
-        <section>
+        <section data-auto-animate>
             <h3>Conclusion</h3>
-            <ul>
-                <li><strong>Functors:</strong> Contexts you can <code>map</code> over (apply <code>A -> B</code>
-                    inside). Like a box with robotic arms.
-                </li>
-                <li><strong>Monads:</strong> Functors you can also <code>flatMap</code> over (chain <code>A -> Monad&lt;B&gt;</code>,
-                    flattening the result). Like a smart box that avoids nesting.
-                </li>
-                <li>Common Java examples: <code>Optional</code>, <code>Stream</code>, <code>CompletableFuture</code>
-                    embody these patterns.
-                </li>
-                <li>They provide structured ways to manage "context" (optionality, collections, async results, potential
-                    errors).
-                </li>
-                <li>Understanding them helps write cleaner, more robust, and more expressive Java code.</li>
-                <li>Don't fear the terms; recognize and leverage the patterns!</li>
-            </ul>
+            <p class="fragment custom blur highlight-green" data-fragment-index="1"><strong>Functors:</strong><span class="fragment custom blur highlight-blue" data-fragment-index="2"> Contexts you can <code>map</code> over.</span></p>
+            <p class="fragment custom blur  highlight-green" data-fragment-index="3"><strong>Monads:</strong><span  class="fragment custom blur highlight-blue" data-fragment-index="4"> Functors you can also <code>flatMap</code> over.</span></p>
             <aside class="notes">
                 To wrap up: Functors let you apply functions inside contexts. Monads let you chain functions that return
                 contexts, keeping the structure flat. You're likely already using them via Optional, Stream, and
@@ -771,13 +700,26 @@ flattenedStream.forEach(s -> System.out.print(s + " ")); // Output: a b c d e
             </aside>
         </section>
 
-        <section>
+        <section data-auto-animate>
+            <h3>Conclusion</h3>
+
+            <p class="fragment custom blur highlight-green" data-fragment-index="1">Common Java examples: <br>
+            <p class="fragment custom blur highlight-blue" data-fragment-index="2"><code>Optional</code>, <code>Stream</code>, <code>CompletableFuture</code></p>
+
+            <p class="fragment custom blur highlight-blue" data-fragment-index="3"><em>They provide structured ways to manage "context" (optionality, collections, async results).</em></p>
+            <p class="fragment custom blur highlight-blue" data-fragment-index="4"><em>Understanding them helps write cleaner, more robust, and more expressive Java code.</em></p>
+
+            <aside class="notes">
+                To wrap up: Functors let you apply functions inside contexts. Monads let you chain functions that return
+                contexts, keeping the structure flat. You're likely already using them via Optional, Stream, and
+                CompletableFuture. Recognizing the pattern helps you use them more effectively.
+            </aside>
+        </section>
+
+        <section data-auto-animate>
             <h3>Questions?</h3>
             <img data-src="https://placehold.co/600x400/87CEEB/FFFFFF?text=Any+Questions%3F" alt="Q&A Placeholder"
                  style="border: none; box-shadow: none; margin-top: 40px;">
-            <aside class="notes">
-                Now I'd be happy to take any questions you might have.
-            </aside>
         </section>
 
     </div>
