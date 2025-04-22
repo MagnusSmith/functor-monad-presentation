@@ -176,8 +176,7 @@
         <section data-auto-animate>
             <h3>Why Are We Here?</h3>
             <ul>
-                <li class="fragment custom blur highlight-current-green" data-fragment-index="1">Functional programming
-                    concepts are increasingly relevant in Java.
+                <li class="fragment custom blur highlight-current-green" data-fragment-index="1">Functional programming concepts are increasingly relevant in Java.
                 </li>
                 <li class="fragment custom blur highlight-current-green" data-fragment-index="2">Functors and Monads
                     might sound complex when unfamiliar, but the underlying ideas are powerful and useful.
@@ -190,26 +189,23 @@
             </aside>
         </section>
         <section data-auto-animate>
-            <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">Goal:</h3>
+            <h3>Goal: Functors + Monads</h3>
             <ul>
-                <li class="fragment custom blur highlight-current-green check" data-fragment-index="1"> Understand <em>what</em>
-                    they are, see <em>how</em> they appear in Java, and learn <em>why</em> you might care.
-                </li>
-                <li class="fragment custom blur highlight-current-green check" data-fragment-index="2">Focus on
-                    intuition and practical application, not deep category theory.
-                </li>
+                <li class="fragment custom blur highlight-green check" data-fragment-index="1"> Understand <em>what</em> they are</li>
+                <li class="fragment custom blur highlight-green check" data-fragment-index="2">See <em>how</em> they appear in Java</li>
+                <li class="fragment custom blur highlight-green check" data-fragment-index="3">Learn <em>why</em> you might care.</li>
+                <li class="fragment custom blur highlight-green check" data-fragment-index="4">Focus on intuition and practical application, not deep category theory.</li>
             </ul>
         </section>
         <section data-auto-animate>
-            <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">The Problem: Handling
-                "Context"</h3>
-            <p>Often, our values don't exist in isolation. They come with some form of "context":</p>
+            <h3>The Problem: Handling "Context"</h3>
+            <p><em>Often, our values don't exist in isolation. They come with some form of "context":</em></p>
             <ul>
-                <li class="fragment custom blur highlight-current-green check" data-fragment-index="1">Maybe the value
-                    is present, maybe it's not (like <code>Optional&lt;T&gt;</code>).
+                <li class="fragment custom blur highlight-green check" data-fragment-index="1">Maybe the value
+                    is present, maybe it's not.<br><span class="fragment custom blur highlight-red" data-fragment-index=2"><code>Optional&lt;T&gt;</code></span>
                 </li>
-                <li class="fragment custom blur highlight-current-green check" data-fragment-index="2">It's one value
-                    among many (like <code>List&lt;T&gt;</code> or <code>Stream&lt;T&gt;</code>).
+                <li class="fragment custom blur highlight-green check" data-fragment-index="3" >It's one value
+                    among many<br><span class="fragment custom blur highlight-red" data-fragment-index=4"><code>List&lt;T&gt;</code> or <code>Stream&lt;T&gt;</code></span>
                 </li>
             </ul>
             <aside class="notes">
@@ -219,15 +215,14 @@
             </aside>
         </section>
         <section data-auto-animate>
-            <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">The Problem: Handling
-                "Context"</h3>
+            <h3>The Problem: Handling "Context"</h3>
             <ul>
-                <li class="fragment custom blur highlight-current-green check" data-fragment-index=1">It's a value that
-                    will arrive later (like <code>CompletableFuture&lt;T&gt;</code>).
+                <li class="fragment custom blur highlight-green check" data-fragment-index=1">It's a value that
+                will arrive later<br><span class="fragment custom blur highlight-red" data-fragment-index=2"><code>CompletableFuture&lt;T&gt;</code></span>
                 </li>
-                <li class="fragment custom blur highlight-current-green check" data-fragment-index="2">It represents a
-                    computation that might succeed or fail (Custom <code>Result&lt;T&gt;</code> or
-                    <code>Try&lt;T&gt;</code> types).
+                <li class="fragment custom blur highlight-green check" data-fragment-index="3">It represents a
+                    computation that might succeed or fail<br><span class="fragment custom blur highlight-red" data-fragment-index=4"><code>Result&lt;T&gt;</code> or
+                    <code>Try&lt;T&gt;</code> types.</span>
                 </li>
             </ul>
             <aside class="notes">
@@ -237,30 +232,30 @@
             </aside>
         </section>
         <section data-auto-animate>
-            <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">Challenge:</h3>
-            <p class="fragment custom blur highlight-current-green check" data-fragment-index=1">How do we apply
+            <h3>The Challenge:</h3>
+            <p class="fragment custom blur highlight-green check" data-fragment-index=1">How do we apply
                 functions or transformations to the value(s) <em>inside</em> this context, without manually unpacking
                 and repacking them every time?</p>
         </section>
 
         <section data-auto-animate>
-            <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">Enter the Functor!</h3>
+            <h3>Functor</h3>
             <p><em>A design pattern for types that contain value(s).</em></p>
             <ul>
-                <li class="fragment custom blur highlight-current-green" data-fragment-index="1">Container:<span
+                <li class="fragment custom blur highlight-green" data-fragment-index="1">Container:<span
                         class="fragment custom blur highlight-red"
                         data-fragment-index="2"> The type that holds values</span>
                 </li>
-                <li class="fragment custom blur highlight-current-green" data-fragment-index="3">Function:<span
+                <li class="fragment custom blur highlight-green" data-fragment-index="3">Function:<span
                         class="fragment custom blur highlight-red"
                         data-fragment-index="4"> A -> B</span>
                 </li>
-                <li class="fragment custom blur highlight-current-green" data-fragment-index="5">Functor:<span
+                <li class="fragment custom blur highlight-green" data-fragment-index="5">Functor:<span
                         class="fragment custom blur highlight-red"
                         data-fragment-index="6"> Transformation capability of the container</span>
                 </li>
             </ul>
-            <p class="fragment custom blur highlight-current-green" data-fragment-index=7">Provides a standard way to
+            <p class="fragment custom blur highlight-green" data-fragment-index=7">Provides a standard way to
                 apply a function to the value(s) <em>without changing the context</em>.</p>
 
             <aside class="notes">
@@ -284,14 +279,14 @@
             </aside>
         </section>
         <section data-auto-animate>
-            <h3 class="custom blur highlight-blue-initially" data-fragment-index="0">Enter the Functor!</h3>
+            <h3>Functor</h3>
             <p><em>It lifts a function into the world of contexts.</em></p>
 
-            <p class="fragment custom blur highlight-current-green" data-fragment-index=1">The transformation operation:
+            <p class="fragment custom blur highlight-green" data-fragment-index=1">The transformation operation:
                 <span
                         class="fragment custom blur highlight-red"
                         data-fragment-index="2"><code>map</code></span></p>
-            <p class="fragment custom blur highlight-current-green" data-fragment-index=3"><code>map</code> takes a
+            <p class="fragment custom blur highlight-green" data-fragment-index=3"><code>map</code> takes a
                 regular function <code>A -> B</code><span
                         class="fragment custom blur highlight-red"
                         data-fragment-index="4"> transforms <code>Functor&lt;A&gt;</code> to <code>Functor&lt;B&gt;</code>.</span>
@@ -326,7 +321,7 @@
         </section>
         <section data-auto-animate>
             <h3>Functor: <code>Optional&lt;T&gt;</code></h3>
-            <p class="fragment custom blur highlight-current-green">Context: <span
+            <p class="fragment custom blur highlight-green">Context: <span
                     class="fragment custom blur highlight-current-red"><em>optionality</em></span></p>
             <div class="code-wrapper">
                 <pre><code class="java" data-line-numbers data-noescape data-trim>
@@ -360,7 +355,7 @@ println(emptyLength);
 
         <section data-auto-animate>
             <h3>Functor: <code>Stream&lt;T&gt;</code></h3>
-            <p class="fragment custom blur highlight-current-green">Context: <span
+            <p class="fragment custom blur highlight-green">Context: <span
                     class="fragment custom blur highlight-current-red"><em>a sequence of elements</em></span></p>
             <div class="code-wrapper">
                 <pre><code class="java" data-noescape data-trim data-line-numbers>
@@ -393,7 +388,7 @@ upperCaseStream.forEach(System.out::println);
             <h3>Functor Laws</h3>
             <p>For a type to be a <em>well-behaved</em> Functor, its <code>map</code> should obey two laws:</p>
             <p class="fragment custom blur highlight-green"><strong>1. Identity:</strong>
-                <span class="fragment custom blur highlight-current-red"><br><code>functor.map(x -> x)</code> should be equivalent to <code>functor</code>.</span>
+                <span class="fragment custom blur highlight-current-blue"><br><code>functor.map(x -> x)</code> should be equivalent to <code>functor</code>.</span>
             </p>
 
         </section>
@@ -401,9 +396,9 @@ upperCaseStream.forEach(System.out::println);
             <h3>Functor Laws</h3>
 
             <p class="fragment custom blur highlight-green"><strong>2. Composition:</strong>
-                <span class="fragment custom blur highlight-current-red"><br>Mapping with two functions sequentially is the same as mapping with the composition of those functions.</span>
+                <span class="fragment custom blur highlight-current-blue"><br>Mapping with two functions sequentially is the same as mapping with the composition of those functions.</span>
             </p>
-            <p class="fragment custom blur highlight-current-red"><code>functor.map(f).map(g)</code> is equivalent to
+            <p class="fragment custom blur highlight-current-blue"><code>functor.map(f).map(g)</code> is equivalent to
                 <code>functor.map(x -> g(f(x)))</code><br></p>
             <aside class="notes">
                 These laws might seem abstract, but they just guarantee that `map` doesn't do anything weird. It behaves
@@ -418,7 +413,7 @@ upperCaseStream.forEach(System.out::println);
             <p><em>What happens if the function we want to <code>map</code> <strong>also</strong> returns a value wrapped in the same
                 context?</em></p>
 
-            <p class="fragment custom blur highlight-current-green">Nested contexts: <span class="fragment custom blur highlight-current-red"><code>Optional&lt;Optional&lt;String&gt;&gt;</code></span></p>
+            <p class="fragment custom blur highlight-green">Nested contexts: <span class="fragment custom blur highlight-current-red"><code>Optional&lt;Optional&lt;String&gt;&gt;</code></span></p>
         </section>
         <section data-auto-animate>
             <h3>The Problem with <code>map</code></h3>
@@ -452,7 +447,7 @@ Optional&lt;Optional&lt;Address&gt;&gt; nestedOptAddress
         </section>
 
         <section data-auto-animate>
-            <h3>Enter the Monad!</h3>
+            <h3>Monad</h3>
             <p>A Monad <strong>is</strong> a Functor with <em>additional features</em>.</p>
             <p class="fragment custom blur highlight-green">It's a pattern designed specifically to handle:</p><br>
             <span class="fragment custom blur highlight-blue"><em>Sequences of operations where each step might return a value <strong>already
@@ -464,14 +459,14 @@ Optional&lt;Optional&lt;Address&gt;&gt; nestedOptAddress
             </aside>
         </section>
         <section data-auto-animate>
-            <h3>Enter the Monad!</h3>
+            <h3>Monad</h3>
             <p class="fragment custom blur highlight-green" data-fragment-index=1">The key operation:<span
                     class="fragment custom blur highlight-red"
                     data-fragment-index="2"><code>flatMap</code></span></p>
             <p class="fragment custom blur highlight-current-green" data-fragment-index=3"><code>f: A -> Monad&lt;B&gt;</code>
-                <span class="fragment custom blur highlight-red" data-fragment-index="4"><br>flatMap transforms
+                <span class="fragment custom blur highlight-current-blue" data-fragment-index="4"><br>flatMap transforms
                     <br><code>Monad&lt;A&gt;</code> to <code>Monad&lt;B&gt;</code>.</span></p>
-            <p  class="fragment custom blur" data-fragment-index="4" >Crucially, it <em>maps</em> then <strong>flattens</strong> the result, avoiding the nesting problem!</p>
+            <p  class="fragment custom blur highlight-current-blue" data-fragment-index="5" >Crucially, it <em>maps</em> then <strong>flattens</strong> the result, avoiding the nesting problem!</p>
             <aside class="notes">
                 Monads build on Functors. They add the crucial `flatMap` operation. `flatMap` is like `map`, but it's
                 specifically for functions that *already* return a monadic value. Its superpower is preventing the
@@ -483,12 +478,12 @@ Optional&lt;Optional&lt;Address&gt;&gt; nestedOptAddress
             </aside>
         </section>
         <section data-auto-animate>
-            <h3>Enter the Monad!</h3>
+            <h3>Monad</h3>
 			<p class="fragment custom blur highlight-green" data-fragment-index=1">Lift a value into the context: <span
 					class="fragment custom blur highlight-red"
 					data-fragment-index="2"><code>of</code></span></p>
-            <p class="fragment custom blur"
-			   data-fragment-index="2">In Java, typically static factory methods like <code>Optional.of()</code>, <code>Stream.of()</code>.</p>
+            <p class="fragment custom blur highlight-current-blue" data-fragment-index="3">In Java, typically static factory methods like <span class="fragment custom blur highlight-current-blue" data-fragment-index=4>
+                <code>Optional.of()</code>, <code>Stream.of()</code>.</span></p>
             <aside class="notes">
                 Monads build on Functors. They add the crucial `flatMap` operation. `flatMap` is like `map`, but it's
                 specifically for functions that *already* return a monadic value. Its superpower is preventing the
@@ -500,7 +495,7 @@ Optional&lt;Optional&lt;Address&gt;&gt; nestedOptAddress
         <section data-auto-animate>
             <h3>Monad Analogy: The Smart Box 🎁➡️🎁</h3>
             <p>Now, the function you want to apply <em>itself</em> produces a <em>new</em> sealed box containing the result</p><br>
-				<code>f: User -> Optional&lt;Address&gt;</code>)
+				<code>f: User -> Optional&lt;Address&gt;</code>
             <p>If you just used <code>map</code> (the Functor way), you'd get a box containing another box (<code>Optional&lt;Optional&lt;Address&gt;&gt;</code>).</p>
             <aside class="notes">
                 The key difference in the analogy is that `flatMap` knows how to handle functions that return *another
@@ -529,8 +524,8 @@ Optional&lt;Optional&lt;Address&gt;&gt; nestedOptAddress
         </section>
         <section data-auto-animate>
             <h3>Monad: <code>Optional</code></h3>
-            <p><code>Optional</code> is a Monad => <span class="fragment highlight-red"><code>flatMap</code></span>
-            <div class="code-wrapper">
+            <p><span class="fragment custom blur highlight-current-blue" data-fragment-index="1"><code>Optional</code> is a Monad</span><span class="fragment custom blur highlight-red"  data-fragment-index="2"> => <code>flatMap</code></span>
+            <div class="code-wrapper fragment" data-fragment-index="3">
                 <pre><code class="java" data-line-numbers data-trim>
 Optional&lt;User&gt; findUser(String userId) {
   // ... logic to fetch user from database or return Optional.empty() ...
@@ -548,13 +543,13 @@ Optional&lt;Address&gt; nestedOptAddress
                     = optUser.flatMap(this::findAddress);
                 </code></pre>
             </div>
-            <p><code>flatMap</code> allows chaining operations that might return empty Optionals.</p>
+            <p class="fragment custom blur highlight-current-blue" data-fragment-index="4"><code>flatMap</code> allows chaining operations that might return empty Optionals.</p>
         </section>
 
         <section data-auto-animate>
             <h3>Monad: <code>Stream</code></h3>
-            <p><code>Stream</code> is a Monad => <span class="fragment custom highlight-red"><code>flatMap</code></span></p>
-            <div class="code-wrapper">
+            <p><span class="fragment custom blur highlight-current-blue" data-fragment-index="1"><code>Stream</code> is a Monad</span><span class="fragment custom blur highlight-red"  data-fragment-index="2"> => <code>flatMap</code></span></p>
+            <div class="code-wrapper fragment" data-fragment-index="3">
                 <pre><code class="java" data-trim>
 // A list where each element is itself a list of Strings
 List&lt;List&lt;String&gt;&gt; listOfLists = asList(asList("a", "b"),
@@ -574,7 +569,7 @@ Stream&lt;String&gt; flattenedStream = listOfLists.stream().flatMap(listToStream
 
 flattenedStream.forEach(s -> System.out.print(s + " ")); // Output: a b c d e</code></pre>
             </div>
-            <p><code>flatMap</code> is essential for flattening nested collections or streams.</p>
+            <p class="fragment custom blur highlight-current-blue" data-fragment-index="4"><code>flatMap</code> is essential for flattening nested collections or streams.</p>
             <aside class="notes">
                 For Streams, `flatMap` is used when your transformation function takes one element and produces
                 *multiple* elements (represented as another Stream or Collection). `flatMap` takes all the resulting
@@ -585,15 +580,15 @@ flattenedStream.forEach(s -> System.out.print(s + " ")); // Output: a b c d e</c
         <section data-auto-animate>
             <h3>Monad Laws: <code>flatMap</code></h3>
             <p class="fragment custom blur highlight-green" data-fragment-index="0"><strong>1. Left Identity:</strong></p>
-            <p class="fragment custom blur" data-fragment-index="1"><em>Wrapping a value then flatMapping <code>f</code> is the same as just applying<code>f</code> to the value.</em></p>
-            <p class="fragment custom blur highlight-red" data-fragment-index="1"><code>Monad.of(x).flatMap(f) <=> f(x)</code>
+            <p class="fragment custom blur highlight-current-blue" data-fragment-index="1"><em>Wrapping a value then flatMapping <code>f</code> is the same as just applying<code>f</code> to the value.</em></p>
+            <p class="fragment custom blur highlight-red" data-fragment-index="2"><code>Monad.of(x).flatMap(f) <=> f(x)</code>
         </p>
         </section>
         <section data-auto-animate>
             <h3>Monad Laws: <code>flatMap</code></h3>
             <p class="fragment custom blur highlight-green" data-fragment-index="0"><strong>2. Right Identity:</strong></p>
-            <p class="fragment custom blur" data-fragment-index="1"><em>FlatMapping with the wrapping function <code>Monad::of</code> doesn't change the monad.</em></p>
-            <p class="fragment custom blur highlight-red" data-fragment-index="1"><code>m.flatMap(Monad::of) <=> m</code></p>
+            <p class="fragment custom blur highlight-current-blue" data-fragment-index="1"><em>FlatMapping with the wrapping function <code>Monad::of</code> doesn't change the monad.</em></p>
+            <p class="fragment custom blur highlight-red" data-fragment-index="2"><code>m.flatMap(Monad::of) <=> m</code></p>
             <aside class="notes">
                 Again, don't get bogged down by the formulas. The essence is that `flatMap` allows reliable, predictable
                 chaining of operations within the monadic context. These laws guarantee that chaining works as you'd
@@ -603,8 +598,8 @@ flattenedStream.forEach(s -> System.out.print(s + " ")); // Output: a b c d e</c
         <section data-auto-animate>
             <h3>Monad Laws: <code>flatMap</code></h3>
             <p class="fragment custom blur highlight-green" data-fragment-index="0"><strong>3. Associativity:</strong></p>
-            <p class="fragment custom blur" data-fragment-index="1"><em>How you group chained <code>flatMap</code> calls doesn't matter.</em></p>
-            <p class="fragment custom blur highlight-red" data-fragment-index="1"><code>m.flatMap(f).flatMap(g) <=> m.flatMap(x -> f(x).flatMap(g))</code></p>
+            <p class="fragment custom blur highlight-current-blue" data-fragment-index="1"><em>How you group chained <code>flatMap</code> calls doesn't matter.</em></p>
+            <p class="fragment custom blur highlight-red" data-fragment-index="2"><code>m.flatMap(f).flatMap(g) <=> m.flatMap(x -> f(x).flatMap(g))</code></p>
             <aside class="notes">
                 <small>(You don't usually need to *prove* these, but rely on library types like `Optional` and `Stream`
                     obeying them.)</small>
@@ -615,65 +610,65 @@ flattenedStream.forEach(s -> System.out.print(s + " ")); // Output: a b c d e</c
             <h3>Functor vs Monad</h3>
             <p><em>Core Idea:</em></p>
             <p data-id="functor-label-1" class="fragment custom blur highlight-green" data-fragment-index="0"><strong>Functor:</strong></p>
-            <p data-id="functor-desc-1" class="fragment custom blur" data-fragment-index="1"><em>Mapping over a context.</em></p>
+            <p data-id="functor-desc-1" class="fragment custom blur highlight-current-blue" data-fragment-index="1"><em>Mapping over a context.</em></p>
             <p data-id="monad-label-1" class="fragment custom blur highlight-green" data-fragment-index="2"><strong>Monad:</strong></p>
-            <p data-id="monad-desc-1" class="fragment custom blur" data-fragment-index="3"><em>Sequencing/Chaining operations within a context</em></p>
+            <p data-id="monad-desc-1" class="fragment custom blur highlight-current-blue" data-fragment-index="3"><em>Sequencing/Chaining operations within a context</em></p>
         </section>
 
         <section data-auto-animate>
             <h3>Functor vs Monad</h3>
             <p><em>Key Method(s):</em></p>
             <p data-id="functor-label-2" class="fragment custom blur highlight-green" data-fragment-index="0"><strong>Functor:</strong></p>
-            <p data-id="functor-desc-2" class="fragment custom blur" data-fragment-index="1"><em><code>map(A -> B)</code></em></p>
+            <p data-id="functor-desc-2" class="fragment custom blur highlight-current-blue" data-fragment-index="1"><em><code>map(A -> B)</code></em></p>
             <p data-id="monad-label-2" class="fragment custom blur highlight-green" data-fragment-index="2"><strong>Monad:</strong></p>
-            <p data-id="monad-desc-2" class="fragment custom blur" data-fragment-index="3"><em><code>flatMap(A -> Monad&lt;B&gt;)</code> <br>+ <code>map(A -> B)</code> <br>+ <code>of(A -> Monad&lt;A&gt;)</code></em></p>
+            <p data-id="monad-desc-2" class="fragment custom blur highlight-current-blue" data-fragment-index="3"><em><code>flatMap(A -> Monad&lt;B&gt;)</code> <br>+ <code>map(A -> B)</code> <br>+ <code>of(A -> Monad&lt;A&gt;)</code></em></p>
         </section>
 
         <section data-auto-animate>
             <h3>Functor vs Monad</h3>
             <p><em>Handles Function Returning...</em></p>
             <p  data-id="functor-label-3" class="fragment custom blur highlight-green" data-fragment-index="0"><strong>Functor:</strong></p>
-            <p data-id="functor-desc-3" class="fragment custom blur" data-fragment-index="1"><em>Plain value</em></p>
+            <p data-id="functor-desc-3" class="fragment custom blur highlight-current-blue" data-fragment-index="1"><em>Plain value</em></p>
             <p data-id="monad-label-3" class="fragment custom blur highlight-green" data-fragment-index="2"><strong>Monad:</strong></p>
-            <p data-id="monad-desc-3" class="fragment custom blur" data-fragment-index="3"><em>Contextual value <code>Monad&lt;B&gt;</code></em></p>
+            <p data-id="monad-desc-3" class="fragment custom blur highlight-current-blue" data-fragment-index="3"><em>Contextual value <code>Monad&lt;B&gt;</code></em></p>
         </section>
 
         <section  data-auto-animate>
             <h3>Functor vs Monad</h3>
             <p><em>Result of applying <code>Fn(A -> Context&lt;B&gt;)</code></em><p>
             <p data-id="functor-label-4" class="fragment custom blur highlight-green" data-fragment-index="0"><strong>Functor:</strong></p>
-            <p data-id="functor-desc-4" class="fragment custom blur" data-fragment-index="1"><em><code>Context&lt;Context&lt;B&gt;&gt;</code> (via <code>map</code>)</em></p>
-            <p data-id="monad-label-4" class="fragment custom blur highlight-green" data-fragment-index="3"><strong>Monad:</strong></p>
-            <p data-id="monad-desc-4" class="fragment custom blur" data-fragment-index="4"><em><code>Context&lt;B&gt;</code> (via <code>flatMap</code>)</em></p>
+            <p data-id="functor-desc-4" class="fragment custom blur highlight-current-blue" data-fragment-index="1"><em><code>Context&lt;Context&lt;B&gt;&gt;</code> (via <code>map</code>)</em></p>
+            <p data-id="monad-label-4" class="fragment custom blur highlight-green" data-fragment-index="2"><strong>Monad:</strong></p>
+            <p data-id="monad-desc-4" class="fragment custom blur highlight-current-blue" data-fragment-index="3"><em><code>Context&lt;B&gt;</code> (via <code>flatMap</code>)</em></p>
         </section>
 
         <section data-auto-animate>
             <h3>Functor vs Monad</h3>
             <p><em>Analogy:</em></p>
             <p data-id="functor-label-5" class="fragment custom blur highlight-green" data-fragment-index="0"><strong>Functor:</strong></p>
-            <p data-id="functor-desc-5" class="fragment custom blur" data-fragment-index="1"><em>Box + Tool (map)</em></p>
+            <p data-id="functor-desc-5" class="fragment custom blur highlight-current-blue" data-fragment-index="1"><em>Box + Tool (map)</em></p>
             <p data-id="monad-label-5" class="fragment custom blur highlight-green" data-fragment-index="3"><strong>Monad:</strong></p>
-            <p data-id="monad-desc-5" class="fragment custom blur" data-fragment-index="4"><em>Smart Box + Tool that returns Box (flatMap)</em></p>
-            <p data-id="functor-monad-5" class="fragment custom blur highlight-green" data-fragment-index="5" style="text-align: center; margin-top: 20px;"><strong>All Monads are Functors, but not all Functors are
-                Monads.</strong></p>
+            <p data-id="monad-desc-5" class="fragment custom blur highlight-current-blue" data-fragment-index="4"><em>Smart Box + Tool that returns Box (flatMap)</em></p>
+            <p data-id="functor-monad-5" class="fragment custom blur highlight-blue" data-fragment-index="5"><strong><em>All Monads are Functors, but not all Functors are
+                Monads.</em></strong></p>
         </section>
 
         <section data-auto-animate>
             <h3>Benefits in Java</h3>
-            <p class="fragment custom highlight-green" data-fragment-index="1"><strong>Cleaner Null Handling:</strong></p>
-            <p><code>Optional.map</code>/<code>flatMap</code> chains avoid deep nesting of <code>if (x != null)</code> checks.</p>
+            <p class="fragment custom blur highlight-green" data-fragment-index="0"><strong>Cleaner Null Handling:</strong></p>
+            <p class="fragment custom blur highlight-current-blue" data-fragment-index="1"><code>Optional.map</code>/<code>flatMap</code> chains avoid deep nesting of <code>if (x != null)</code> checks.</p>
             <p class="fragment custom blur highlight-blue" data-fragment-index="2"><em>Code becomes more linear and readable.</em></p>
         </section>
         <section data-auto-animate>
             <h3>Benefits in Java</h3>
-            <p class="fragment custom highlight-green" data-fragment-index="1"><strong>Simplified Asynchronous Code:</strong></p>
-            <p><code>CompletableFuture.thenApply</code> (map) / <code>thenCompose</code> (flatMap).</p>
+            <p class="fragment custom blur highlight-green" data-fragment-index="0"><strong>Simplified Asynchronous Code:</strong></p>
+            <p class="fragment custom blur highlight-current-blue" data-fragment-index="1"><code>CompletableFuture.thenApply</code> (map) / <code>thenCompose</code> (flatMap).</p>
             <p class="fragment custom blur highlight-blue" data-fragment-index="2"><em>chain async operations without complex callback management => "callback hell".</em></p>
         </section>
         <section data-auto-animate>
             <h3>Benefits in Java</h3>
-            <p class="fragment custom highlight-green" data-fragment-index="1"><strong>Declarative Data Pipelines:</strong></p>
-            <p><code>Stream.map</code>/<code>flatMap</code> </p>
+            <p class="fragment custom blur highlight-green" data-fragment-index="0"><strong>Declarative Data Pipelines:</strong></p>
+            <p class="fragment custom blur highlight-current-blue" data-fragment-index="1"><code>Stream.map</code>/<code>flatMap</code> </p>
             <p class="fragment custom blur highlight-blue" data-fragment-index="2"><em>build complex data transformations concisely and expressively.</em></p>
         </section>
         <section data-auto-animate>
@@ -692,7 +687,7 @@ flattenedStream.forEach(s -> System.out.print(s + " ")); // Output: a b c d e</c
         <section data-auto-animate>
             <h3>Conclusion</h3>
             <p class="fragment custom blur highlight-green" data-fragment-index="1"><strong>Functors:</strong><span class="fragment custom blur highlight-blue" data-fragment-index="2"> Contexts you can <code>map</code> over.</span></p>
-            <p class="fragment custom blur  highlight-green" data-fragment-index="3"><strong>Monads:</strong><span  class="fragment custom blur highlight-blue" data-fragment-index="4"> Functors you can also <code>flatMap</code> over.</span></p>
+            <p class="fragment custom blur highlight-green" data-fragment-index="3"><strong>Monads:</strong><span  class="fragment custom blur highlight-blue" data-fragment-index="4"> Functors you can also <code>flatMap</code> over.</span></p>
             <aside class="notes">
                 To wrap up: Functors let you apply functions inside contexts. Monads let you chain functions that return
                 contexts, keeping the structure flat. You're likely already using them via Optional, Stream, and
@@ -704,9 +699,9 @@ flattenedStream.forEach(s -> System.out.print(s + " ")); // Output: a b c d e</c
             <h3>Conclusion</h3>
 
             <p class="fragment custom blur highlight-green" data-fragment-index="1">Common Java examples: <br>
-            <p class="fragment custom blur highlight-blue" data-fragment-index="2"><code>Optional</code>, <code>Stream</code>, <code>CompletableFuture</code></p>
+            <p class="fragment custom blur highlight-red" data-fragment-index="2"><code>Optional</code>, <code>Stream</code>, <code>CompletableFuture</code></p>
 
-            <p class="fragment custom blur highlight-blue" data-fragment-index="3"><em>They provide structured ways to manage "context" (optionality, collections, async results).</em></p>
+            <p class="fragment custom blur highlight-current-blue" data-fragment-index="3"><em>They provide structured ways to manage "context" (optionality, collections, async results).</em></p>
             <p class="fragment custom blur highlight-blue" data-fragment-index="4"><em>Understanding them helps write cleaner, more robust, and more expressive Java code.</em></p>
 
             <aside class="notes">
