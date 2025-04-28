@@ -158,14 +158,34 @@
         .reveal .slides section .fragment.visible.highlight-green {
             color: green !important; /* Or background-color, etc. */
         }
+
+        /* --- Custom Slide-in-from-Right Animation --- */
+
+        /* Initial state: Off-screen to the right and invisible */
+        .fragment.slide-right {
+            opacity: 0;
+            /* Start 100% of its own width to the right */
+            transform: translateX(100%);
+            /* Define the transition: property duration timing-function */
+            /* Apply transition to the initial state */
+            transition: transform 0.6s ease-out, opacity 0.6s ease-out !important;
+            /* You might need !important to override theme styles */
+        }
+
+        /* Final state: When the fragment becomes visible */
+        .fragment.slide-right.visible {
+            opacity: 1;
+            /* Move back to its original position (defined by layout) */
+            transform: translateX(0);
+        }
     </style>
 </head>
 <body>
 <div class="reveal">
     <div class="slides">
         <section data-auto-animate>
-            <h3>Functors and Monads for Java Developers</h3>
-            <h3>Demystifying Functional Concepts</h3>
+            <h3>Cleaner, More Expressive Java</h3>
+            <h3>using Functors and Monads</h3>
             <p style="text-align: center;"><small>Magnus Smith</small></p>
             <aside class="notes">
                 Welcome everyone. Today we'll dive into Functors and Monads, concepts from functional programming that
@@ -176,10 +196,10 @@
         <section data-auto-animate>
             <h3>Why Are We Here?</h3>
             <ul>
-                <li class="fragment custom blur highlight-current-green" data-fragment-index="1">Functional programming concepts are increasingly relevant in Java.
+                <li class="fragment custom blur highlight-current-green" data-fragment-index="1">Functional programming concepts are relevant in Java.
                 </li>
                 <li class="fragment custom blur highlight-current-green" data-fragment-index="2">Functors and Monads
-                    might sound complex when unfamiliar, but the underlying ideas are powerful and useful.
+                    might sound intimidating when unfamiliar, but the underlying ideas are powerful and useful.
                 </li>
             </ul>
             <aside class="notes">
@@ -299,26 +319,48 @@
                 in the `map` method.
             </aside>
         </section>
+        <section data-auto-animate>
+            <h3>Functor Analogy: Magic Box 🎁</h3>
+            <p>Imagine a sealed, transparent box containing a value</p>
+            <p>You have a tool that can transform the value.</p>
+            <p>The <code>map</code> operation is like having robotic arms.</p>
+        </section>
+        <section data-auto-animate data-background-transition="slide">
+            <h3>Functor Analogy: Magic Box 🎁</h3>
+
+            <div style="display: flex; justify-content: space-around;">
+                <img src="assets/f1_m1_x_in_box.png" alt="Image 1" class="fragment slide-left" style="width: 40%;">
+                <img src="assets/f2_m2_robot_take_x_from_box.png" alt="Image 2" class="fragment slide-left" style="width: 40%;">
+                <img src="assets/f3_m3_robot_input_x_to_function.png" alt="Image 3" class="fragment slide-left" style="width: 40%;">
+                <img src="assets/function_x_to_y.png" alt="Image 4" class="fragment slide-left" style="width: 40%;">
+            </div>
+
+        </section>
 
         <section data-auto-animate>
-            <h3>Functor Analogy: The Magic Box 🎁</h3>
-            <p>Imagine a sealed, transparent box (the Functor context, e.g., <code>Optional</code>) containing an item
-                (the value, e.g., a <code>String</code>).</p>
-            <p>You have a tool (a function, e.g., <code>String::length</code>) that can transform the item.</p>
+            <h3>Functor Analogy: Magic Box 🎁</h3>
+            <p>You give the arms the tool, and they reach <em>inside</em> the box, use the tool on the item</p>
+            <p>They place the <em>transformed</em> value into a <em>new</em>, identical sealed box.</p>
         </section>
         <section data-auto-animate>
-            <h3>Functor Analogy: The Magic Box 🎁</h3>
-            <p>The <code>map</code> operation is like having robotic arms on the box. You give the arms your tool (the
-                function), and they reach *inside* the box, use the tool on the item, and place the *transformed* item
-                into a *new*, identical sealed box.</p>
-            <p>You never opened the original box, and you get back the same *type* of box, just potentially holding a
-                different *type* of item.</p>
-
-            <aside class="notes">
-                This analogy highlights key aspects: the context (box) is preserved, the function operates inside, and
-                you get a new context back. If the box was empty, the arms do nothing and return a new empty box.
-            </aside>
+            <h3>Functor: A Magic Box 🎁</h3>
+            <div style="display: flex; justify-content: space-around;">
+                <img src="assets/function_x_to_y.png" alt="Image 4" class="fragment slide-left" style="width: 40%;">
+                <img src="assets/f4_robot_take_y_from_function.png" alt="Image 1" class="fragment slide-left" style="width: 40%;">
+                <img src="assets/f5_robot_add_y_to_box.png" alt="Image 1" class="fragment slide-left" style="width: 40%;">
+                <img src="assets/f6_m8_y_in_box.png" alt="Image 2" class="fragment slide-left" style="width: 40%;">
+            </div>
         </section>
+        <section data-auto-animate>
+            <h3>Functor: A Magic Box 🎁</h3>
+            <p>You never opened the original box, and you get back the same <em>type</em> of box, just potentially holding a different value.</p>
+        </section>
+        <section data-auto-animate>
+            <h3>Functor: A Magic Box 🎁</h3>
+            <p>Context is preserved, the function operates inside, and you get a new context back.</p>
+            <p>If the box was empty, the arms do nothing and return a new empty box.</p>
+        </section>
+
         <section data-auto-animate>
             <h3>Functor: <code>Optional&lt;T&gt;</code></h3>
             <p class="fragment custom blur highlight-green">Context: <span
@@ -494,8 +536,8 @@ Optional&lt;Optional&lt;Address&gt;&gt; nestedOptAddress
         </section>
         <section data-auto-animate>
             <h3>Monad Analogy: The Smart Box 🎁➡️🎁</h3>
-            <p>Now, the function you want to apply <em>itself</em> produces a <em>new</em> sealed box containing the result</p><br>
-				<code>f: User -> Optional&lt;Address&gt;</code>
+            <p>Now, the function <em>itself</em> produces a <em>new</em> sealed box containing the result</p><br>
+            <code>f: User -> Optional&lt;Address&gt;</code>
             <p>If you just used <code>map</code> (the Functor way), you'd get a box containing another box (<code>Optional&lt;Optional&lt;Address&gt;&gt;</code>).</p>
             <aside class="notes">
                 The key difference in the analogy is that `flatMap` knows how to handle functions that return *another
@@ -504,13 +546,21 @@ Optional&lt;Optional&lt;Address&gt;&gt; nestedOptAddress
             </aside>
         </section>
         <section data-auto-animate>
-            <h3>Monad Analogy: The Smart Box 🎁➡️🎁</h3>
+            <h3>Monad: A Smart Box 🎁➡️🎁</h3>
+            <div style="display: flex; justify-content: space-around;">
+                <img src="assets/f1_m1_x_in_box.png" alt="Image 1" class="fragment slide-left" style="width: 20%;">
+                <img src="assets/f2_m2_robot_take_x_from_box.png" alt="Image 2" class="fragment slide-left" style="width: 40%;">
+                <img src="assets/f3_m3_robot_input_x_to_function.png" alt="Image 3" class="fragment slide-left" style="width: 40%;">
+                <img src="assets/function_x_to_boxed_y.png" alt="Image 4" class="fragment slide-left" style="width: 40%;">
+            </div>
+        </section>
+        <section data-auto-animate>
+            <h3>Monad: A Smart Box 🎁➡️🎁</h3>
             <p>The <code>flatMap</code> operation is smarter:</p>
             <ol>
                 <li>It applies the function inside the first box to get the <em>new inner box</em>.</li>
                 <li>It then <em>unpacks</em> this new inner box.</li>
-                <li>It takes the item (or lack thereof) from the inner box and puts it directly into a final box of the
-                    original type.
+                <li>It takes the value from the inner box and puts it directly into a new same type box.
                 </li>
             </ol>
 
@@ -522,6 +572,17 @@ Optional&lt;Optional&lt;Address&gt;&gt; nestedOptAddress
                 context.
             </aside>
         </section>
+        <section data-auto-animate>
+            <h3>Monad: A Smart Box 🎁➡️🎁</h3>
+            <div style="display: flex; justify-content: space-around;">
+                <img src="assets/m4_robot_take_boxed_y_from_function.png" alt="Image 1" class="fragment slide-left" style="width: 40%;">
+                <img src="assets/m5_robot_add_boxed_y_to_box.png" alt="Image 2" class="fragment slide-left" style="width: 40%;">
+                <img src="assets/m6_y_in_box_in_a_box.png" alt="Image 3" class="fragment slide-left" style="width: 40%;">
+                <img src="assets/m7_robots_removing_boxed_y_from_box.png" alt="Image 4" class="fragment slide-left" style="width: 40%;">
+                <img src="assets/f6_m8_y_in_box.png" alt="Image 5" class="fragment slide-left" style="width: 40%;">
+            </div>
+        </section>
+
         <section data-auto-animate>
             <h3>Monad: <code>Optional</code></h3>
             <p><span class="fragment custom blur highlight-current-blue" data-fragment-index="1"><code>Optional</code> is a Monad</span><span class="fragment custom blur highlight-red"  data-fragment-index="2"> => <code>flatMap</code></span>
