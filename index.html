@@ -236,7 +236,7 @@
                 will arrive later<br><span class="fragment custom blur highlight-red" data-fragment-index=2"><code>CompletableFuture&lt;T&gt;</code></span>
                 </li>
                 <li class="fragment custom blur highlight-green check" data-fragment-index="3">It represents a
-                    computation that might succeed or fail<br><span class="fragment custom blur highlight-red" data-fragment-index=4"><code>Result&lt;T&gt;</code> or
+                    computation that might succeed or fail<br><span class="fragment custom blur highlight-red" data-fragment-index=4"><code>Either&lt;T&gt;</code> or
                     <code>Try&lt;T&gt;</code> types.</span>
                 </li>
             </ul>
@@ -307,10 +307,10 @@
             <h3>Functor Analogy: Magic Box 🎁</h3>
 
             <div style="display: flex; justify-content: space-around;">
-                <img src="assets/f1_m1_x_in_box.png" alt="Image 1" class="fragment slide-left" style="width: 40%;">
-                <img src="assets/f2_m2_robot_take_x_from_box.png" alt="Image 2" class="fragment slide-left" style="width: 40%;">
-                <img src="assets/f3_m3_robot_input_x_to_function.png" alt="Image 3" class="fragment slide-left" style="width: 40%;">
-                <img src="assets/function_x_to_y.png" alt="Image 4" class="fragment slide-left" style="width: 40%;">
+                <img src="assets/f1_m1_x_in_box.png" alt="Image 1" class="fragment slide-left" style="width: 25%;">
+                <img src="assets/f2_m2_robot_take_x_from_box.png" alt="Image 2" class="fragment slide-left" style="width: 25%;">
+                <img src="assets/f3_m3_robot_input_x_to_function.png" alt="Image 3" class="fragment slide-left" style="width: 25%;">
+                <img src="assets/function_x_to_y.png" alt="Image 4" class="fragment slide-left" style="width: 25%;">
             </div>
 
         </section>
@@ -323,10 +323,10 @@
         <section data-auto-animate>
             <h3>Functor: A Magic Box 🎁</h3>
             <div style="display: flex; justify-content: space-around;">
-                <img src="assets/function_x_to_y.png" alt="Image 4" class="fragment slide-left" style="width: 40%;">
-                <img src="assets/f4_robot_take_y_from_function.png" alt="Image 1" class="fragment slide-left" style="width: 40%;">
-                <img src="assets/f5_robot_add_y_to_box.png" alt="Image 1" class="fragment slide-left" style="width: 40%;">
-                <img src="assets/f6_m8_y_in_box.png" alt="Image 2" class="fragment slide-left" style="width: 40%;">
+                <img src="assets/function_x_to_y.png" alt="Image 4" class="fragment slide-left" style="width: 25%;">
+                <img src="assets/f4_robot_take_y_from_function.png" alt="Image 1" class="fragment slide-left" style="width: 25%;">
+                <img src="assets/f5_robot_add_y_to_box.png" alt="Image 1" class="fragment slide-left" style="width: 25%;">
+                <img src="assets/f6_m8_y_in_box.png" alt="Image 2" class="fragment slide-left" style="width: 25%;">
             </div>
         </section>
         <section data-auto-animate>
@@ -507,10 +507,10 @@ Optional&lt;Optional&lt;Address&gt;&gt; nestedOptAddress
         <section data-auto-animate>
             <h3>Monad: A Smart Box 🎁➡️🎁</h3>
             <div style="display: flex; justify-content: space-around;">
-                <img src="assets/f1_m1_x_in_box.png" alt="Image 1" class="fragment slide-left" style="width: 20%;">
-                <img src="assets/f2_m2_robot_take_x_from_box.png" alt="Image 2" class="fragment slide-left" style="width: 40%;">
-                <img src="assets/f3_m3_robot_input_x_to_function.png" alt="Image 3" class="fragment slide-left" style="width: 40%;">
-                <img src="assets/function_x_to_boxed_y.png" alt="Image 4" class="fragment slide-left" style="width: 40%;">
+                <img src="assets/f1_m1_x_in_box.png" alt="Image 1" class="fragment slide-left" style="width: 25%;">
+                <img src="assets/f2_m2_robot_take_x_from_box.png" alt="Image 2" class="fragment slide-left" style="width: 25%;">
+                <img src="assets/f3_m3_robot_input_x_to_function.png" alt="Image 3" class="fragment slide-left" style="width: 25%;">
+                <img src="assets/function_x_to_boxed_y.png" alt="Image 4" class="fragment slide-left" style="width: 25%;">
             </div>
         </section>
         <section data-auto-animate>
@@ -534,11 +534,11 @@ Optional&lt;Optional&lt;Address&gt;&gt; nestedOptAddress
         <section data-auto-animate>
             <h3>Monad: A Smart Box 🎁➡️🎁</h3>
             <div style="display: flex; justify-content: space-around;">
-                <img src="assets/m4_robot_take_boxed_y_from_function.png" alt="Image 1" class="fragment slide-left" style="width: 40%;">
-                <img src="assets/m5_robot_add_boxed_y_to_box.png" alt="Image 2" class="fragment slide-left" style="width: 40%;">
-                <img src="assets/m6_y_in_box_in_a_box.png" alt="Image 3" class="fragment slide-left" style="width: 40%;">
-                <img src="assets/m7_robots_removing_boxed_y_from_box.png" alt="Image 4" class="fragment slide-left" style="width: 40%;">
-                <img src="assets/f6_m8_y_in_box.png" alt="Image 5" class="fragment slide-left" style="width: 40%;">
+                <img src="assets/m4_robot_take_boxed_y_from_function.png" alt="Image 1" class="fragment slide-left" style="width: 20%;">
+                <img src="assets/m5_robot_add_boxed_y_to_box.png" alt="Image 2" class="fragment slide-left" style="width: 20%;">
+                <img src="assets/m6_y_in_box_in_a_box.png" alt="Image 3" class="fragment slide-left" style="width: 20%;">
+                <img src="assets/m7_robots_removing_boxed_y_from_box.png" alt="Image 4" class="fragment slide-left" style="width: 20%;">
+                <img src="assets/f6_m8_y_in_box.png" alt="Image 5" class="fragment slide-left" style="width: 20%;">
             </div>
         </section>
 
